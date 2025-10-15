@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PastryShop.Register_Page"
+             Title="Register_Page">
+
+        <VerticalStackLayout>
+            <Label Text="Register"/>
+
+            <Entry x:Name="register_gmail_entry" Placeholder="gmail"/>
+            <Entry x:Name="register_password_entry" Placeholder="password" IsPassword="True"/>
+            
+            <Entry x:Name="register_code_entry" Placeholder="code"/>
+            <Button Text="Sent code" Clicked="Send_Register_Confirmation_Code_"/>
+            
+            <Label Text="" x:Name="register_errors_label"/>
+            
+            
+            <Button Clicked="Register_" Text="Register"/>
+            <Button Clicked="Go_To_Login_" Text="I have an account"/>
+        </VerticalStackLayout>
+
+</ContentPage>

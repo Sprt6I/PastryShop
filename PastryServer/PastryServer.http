@@ -1,0 +1,6 @@
+@PastryServer_HostAddress = http://localhost:5201
+
+GET {{PastryServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
