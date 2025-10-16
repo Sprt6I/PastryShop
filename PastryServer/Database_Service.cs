@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using BCrypt.Net;
 using System.Data;
+using PastryServer.Models;
 
 namespace PastryServer
 {
@@ -15,6 +16,9 @@ namespace PastryServer
             database = new SQLiteAsyncConnection("pastryshop.db3");
             database.CreateTableAsync<User>().Wait();
             database.CreateTableAsync<Verification_Code>().Wait();
+            database.CreateTableAsync<Address>().Wait();
+            database.CreateTableAsync<Product>().Wait();
+            database.CreateTableAsync<Product_Category>().Wait();
         }
 
         public async Task Add_User_(string gmail, string password)
