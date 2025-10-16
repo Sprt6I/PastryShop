@@ -23,7 +23,7 @@ public partial class Login_Page : ContentPage
         string password = login_password_entry.Text?.Trim() ?? "";
         if (string.IsNullOrEmpty(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
-
+            
         var response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
 
         if (!response.IsSuccessStatusCode) { login_errors_label.Text = await response.Content.ReadAsStringAsync();  return; }

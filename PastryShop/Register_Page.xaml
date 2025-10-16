@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Custom_Widgets="clr-namespace:PastryShop.Custom_Widgets"
              x:Class="PastryShop.Register_Page"
              Title="Register_Page">
 
@@ -8,7 +9,8 @@
             <Label Text="Register"/>
 
             <Entry x:Name="register_gmail_entry" Placeholder="gmail"/>
-            <Entry x:Name="register_password_entry" Placeholder="password" IsPassword="True"/>
+            <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry" />
+            <!--<Entry x:Name="register_password_entry" Placeholder="password" IsPassword="True"/>-->
             
             <Entry x:Name="register_code_entry" Placeholder="code"/>
             <Button Text="Sent code" Clicked="Send_Register_Confirmation_Code_"/>
