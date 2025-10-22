@@ -20,15 +20,15 @@ public partial class Register_Page : ContentPage
     public async void Register_(object sender, EventArgs e)
     {
         string gmail = register_gmail_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
+        if (string.IsNullOrWhiteSpace(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
         if (!Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail is invalid"; return; }
 
         string password = register_password_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(password)) { register_errors_label.Text = "password cant be empty"; return; }
+        if (string.IsNullOrWhiteSpace(password)) { register_errors_label.Text = "password cant be empty"; return; }
         if (!Is_Password_Valid_(password)) { register_errors_label.Text = "password is invalid ( must have big and small letter as well as number nad special character)";  return; }
 
         string code = register_code_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(code)) { register_errors_label.Text = "code cant be empty"; return; }
+        if (string.IsNullOrWhiteSpace(code)) { register_errors_label.Text = "code cant be empty"; return; }
 
         var response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password, verification_code = code });
 
@@ -41,7 +41,7 @@ public partial class Register_Page : ContentPage
     public async void Send_Register_Confirmation_Code_(object sender, EventArgs e)
     {
         string gmail = register_gmail_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
+        if (string.IsNullOrWhiteSpace(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
         if (!Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail must be valid"; return; }
 
         var response = await client.PostAsJsonAsync("Auth/SentVerificationGmail", new { gmail = gmail });
@@ -56,7 +56,7 @@ public partial class Register_Page : ContentPage
 
     public bool Is_Gmail_Valid_(string gmail)
     {
-        if (string.IsNullOrEmpty(gmail)) { return false; }
+        if (string.IsNullOrWhiteSpace(gmail)) { return false; }
 
         string pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
         if (!Regex.IsMatch(gmail, pattern, RegexOptions.IgnoreCase)) { return false; }

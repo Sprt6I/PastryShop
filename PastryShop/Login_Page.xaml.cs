@@ -17,11 +17,11 @@ public partial class Login_Page : ContentPage
     public async void Login_(object sender, EventArgs e)
     {
         string gmail = login_gmail_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(gmail)) { login_errors_label.Text = "Gmail Can't be empty"; return; }
+        if (string.IsNullOrWhiteSpace(gmail)) { login_errors_label.Text = "Gmail Can't be empty"; return; }
         if (!Is_Gmail_Valid_(gmail)) { login_errors_label.Text = "Gmail must be correct"; return; }
 
         string password = login_password_entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(password)) { login_errors_label.Text = "password can't be empty"; return; }
+        if (string.IsNullOrWhiteSpace(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
             
         var response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
@@ -34,7 +34,7 @@ public partial class Login_Page : ContentPage
 
     public bool Is_Gmail_Valid_(string gmail)
     {
-        if (string.IsNullOrEmpty(gmail)) { return false; }
+        if (string.IsNullOrWhiteSpace(gmail)) { return false; }
 
         string pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
         if (!Regex.IsMatch(gmail, pattern, RegexOptions.IgnoreCase)) { return false; }

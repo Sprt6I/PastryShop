@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastryShop", "PastryShop\Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastryServer", "PastryServer\PastryServer.csproj", "{C13AFB96-1438-47A8-9ACA-92A3CA7A5B0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PastryAdmin", "PastryAdmin\PastryAdmin.csproj", "{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,12 @@ Global
 		{C13AFB96-1438-47A8-9ACA-92A3CA7A5B0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C13AFB96-1438-47A8-9ACA-92A3CA7A5B0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C13AFB96-1438-47A8-9ACA-92A3CA7A5B0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9F88EB8-3FCF-4CC7-BE71-353D652F9F94}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
