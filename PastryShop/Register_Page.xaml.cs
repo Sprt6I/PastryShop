@@ -34,6 +34,9 @@ public partial class Register_Page : ContentPage
 
         register_errors_label.Text = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode) { return; }
+
+        register_gmail_entry.Text = "";
+        register_password_entry.Text = "";
         Go_To_Login_(null, null);
     }
 

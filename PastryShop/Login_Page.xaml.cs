@@ -21,6 +21,7 @@ public partial class Login_Page : ContentPage
         if (!Is_Gmail_Valid_(gmail)) { login_errors_label.Text = "Gmail must be correct"; return; }
 
         string password = login_password_entry.Text?.Trim() ?? "";
+        login_password_entry.Text = "";
         if (string.IsNullOrWhiteSpace(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
             
@@ -29,6 +30,8 @@ public partial class Login_Page : ContentPage
         if (!response.IsSuccessStatusCode) { login_errors_label.Text = await response.Content.ReadAsStringAsync();  return; }
 
         login_errors_label.Text = "logged";
+        login_gmail_entry.Text = "";
+        login_password_entry.Text = "";
         // Go_To_Main_App
     }
 
