@@ -2,7 +2,7 @@
 using MimeKit;
 using MailKit.Net.Smtp;
 
-namespace PastryServer
+namespace PastryServer.Services
 {
     public class Gmail_Sender
     {

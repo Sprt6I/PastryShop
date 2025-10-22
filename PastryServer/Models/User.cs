@@ -1,6 +1,6 @@
 ﻿using SQLite;
 
-namespace PastryServer
+namespace PastryServer.Models
 {
     public class User
     {

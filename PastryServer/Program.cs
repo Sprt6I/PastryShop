@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PastryServer;
+using PastryServer.Services;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);

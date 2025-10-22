@@ -3,7 +3,7 @@ using BCrypt.Net;
 using System.Data;
 using PastryServer.Models;
 
-namespace PastryServer
+namespace PastryServer.Services
 {
     public class Database_Service
     {
@@ -32,7 +32,7 @@ namespace PastryServer
 
         public async Task<bool> Check_Password_By_Gmail_(string gmail, string password)
         {
-            User user = await (database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync());
+            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist gmail"); return false; }
 
             return BCrypt.Net.BCrypt.Verify(password, user.Password);
@@ -40,7 +40,7 @@ namespace PastryServer
 
         public async Task<bool> Check_If_Gmail_Exists_(string gmail)
         {
-            User user = await (database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync());
+            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
             return true;
         }

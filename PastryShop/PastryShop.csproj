@@ -79,10 +79,10 @@
 	  <MauiXaml Update="Custom_Widgets\Password_Entry_Widget.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Login_Page.xaml">
+	  <MauiXaml Update="Pages\Login_Page.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Register_Page.xaml">
+	  <MauiXaml Update="Pages\Register_Page.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

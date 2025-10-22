@@ -1,4 +1,4 @@
-﻿namespace PastryServer
+﻿namespace PastryServer.Models
 {
     public class Gmail_Request
     {
