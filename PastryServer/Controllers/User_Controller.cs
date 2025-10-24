@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using PastryServer.Models;
 using PastryServer.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace PastryServer.Controllers
 {
@@ -12,13 +13,15 @@ namespace PastryServer.Controllers
     public class AuthController : ControllerBase
     {
         private readonly Gmail_Sender gmail_sender;
-        private readonly string gmail_login = "darek26655@gmail.com";
-        private readonly string gmail_password = "gdljrbvjzhjruluo"; // gdlj rbvj zhjr uluo
+        private readonly string gmail_login;
+        private readonly string gmail_password;
 
         private readonly Database_Service database;
 
-        public AuthController(Gmail_Sender gmailSender, Database_Service databaseService)
+        public AuthController(Gmail_Sender gmailSender, Database_Service databaseService, IConfiguration config)
         {
+            gmail_login = config["Gmail:Login"];
+            gmail_password = config["Gmail:Password"];
             gmail_sender = gmailSender;
             database = databaseService;
         }
