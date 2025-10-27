@@ -28,7 +28,7 @@ public partial class Products_Manager_Page : ContentPage
     {
         try
         {
-            var products_list = await client.GetFromJsonAsync<List<Product>>("Auth/GetAllProducts");
+            var products_list = await client.GetFromJsonAsync<List<Product>>("Products/GetAllProducts");
             if (products_list != null)
             {
                 products_collection.Clear();
@@ -51,4 +51,21 @@ public partial class Products_Manager_Page : ContentPage
             current_product = selected_product;
         }
     }
+
+    public async void Update_Product_(object sender, EventArgs e)
+    {
+        if (current_product == null)
+        {
+            await DisplayAlert("Error", "No product selected.", "OK");
+            return;
+        }
+
+        var response = await client.PostAsJsonAsync("Products/UpdateProducts", products_collection.ToList());
+
+        if (!response.IsSuccessStatusCode)
+        {
+            await DisplayAlert("Error", "Failed to update product.", "OK");
+        }
+
+    }   
 }

@@ -66,5 +66,10 @@ namespace PastryServer.Services
             var products = await database.Table<Product>().ToListAsync();
             return products;
         }
+
+        public async Task Update_Products_(Product product)
+        {
+            await database.UpdateAsync(product);
+        }
     }
 }

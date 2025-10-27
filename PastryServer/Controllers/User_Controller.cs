@@ -85,13 +85,6 @@ namespace PastryServer.Controllers
             return Ok();
         }
 
-        [HttpPost("GetAllProducts")]
-        public async Task<ActionResult<List<Product>>> Get_All_Products_()
-        {
-            var products = await database.Get_All_Products_();
-            return Ok(products);
-        }
-
         private bool Is_Gmail_Valid_(string gmail)
         {
             if (string.IsNullOrWhiteSpace(gmail)) { return false; }

@@ -9,6 +9,8 @@
             <Entry x:Name="product_name_entry" Text="{Binding current_product.Name, Mode=TwoWay}" />
             <Entry x:Name="product_description_entry" Text="{Binding current_product.Description, Mode=TwoWay}" />
             <Entry x:Name="product_in_stock_entry" Text="{Binding current_product.In_Stock, Mode=TwoWay}" />
+
+            <Button Text="Update Product" Clicked="Update_Products_" />
         </VerticalStackLayout>
         
         
