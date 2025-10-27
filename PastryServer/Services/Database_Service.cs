@@ -23,9 +23,7 @@ namespace PastryServer.Services
 
         public async Task Add_User_(string gmail, string password)
         {
-            var hash = BCrypt.Net.BCrypt.HashPassword(password);
-
-            var user = new User { Gmail = gmail, Password = hash };
+            var user = new User { Gmail = gmail, Password = password };
 
             await database.InsertAsync(user);
         }
@@ -38,10 +36,12 @@ namespace PastryServer.Services
             return BCrypt.Net.BCrypt.Verify(password, user.Password);
         }
 
-        public async Task<bool> Check_If_Gmail_Exists_(string gmail)
+        public async Task<bool> Login_(string gmail, string password)
         {
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
+            if (user.Password != password) {  return false; }
+
             return true;
         }
 
