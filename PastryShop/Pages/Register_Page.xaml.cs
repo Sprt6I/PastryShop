@@ -27,6 +27,9 @@ public partial class Register_Page : ContentPage
         if (string.IsNullOrWhiteSpace(password)) { register_errors_label.Text = "password cant be empty"; return; }
         if (!Is_Password_Valid_(password)) { register_errors_label.Text = "password is invalid ( must have big and small letter as well as number nad special character)";  return; }
 
+        string repeat_password = register_password_entry_repeat.Text?.Trim() ?? "";
+        if (password != repeat_password) { register_errors_label.Text = "passwords do not match"; return; }
+
         string code = register_code_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(code)) { register_errors_label.Text = "code cant be empty"; return; }
 

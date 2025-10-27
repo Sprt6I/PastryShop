@@ -10,10 +10,10 @@
 
             <Entry x:Name="register_gmail_entry" Placeholder="gmail"/>
             <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry" />
-            <!--<Entry x:Name="register_password_entry" Placeholder="password" IsPassword="True"/>-->
-            
-            <Entry x:Name="register_code_entry" Placeholder="code"/>
+            <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry_repeat" />
+
             <Button Text="Sent code" Clicked="Send_Register_Confirmation_Code_"/>
+            <Entry x:Name="register_code_entry" Placeholder="code"/>
             
             <Label Text="" x:Name="register_errors_label"/>
             
