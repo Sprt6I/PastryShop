@@ -60,5 +60,11 @@ namespace PastryServer.Services
             await database.Table<Verification_Code>().Where(c => c.Id == requested_code.Id).DeleteAsync();
             return true;
         }
+
+        public async Task<List<Product>> Get_All_Products_()
+        {
+            var products = await database.Table<Product>().ToListAsync();
+            return products;
+        }
     }
 }
