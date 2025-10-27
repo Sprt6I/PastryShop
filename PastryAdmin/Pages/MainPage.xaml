@@ -5,8 +5,6 @@
 
     <VerticalStackLayout>
         <Label Text="Admin"/>
-        <Button Text="Users" Clicked="Manipulate_Users_"/>
-        <Button Text="Products" Clicked="Manipulate_Products_"/>
     </VerticalStackLayout>
 
 </ContentPage>

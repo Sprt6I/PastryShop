@@ -1,11 +1,7 @@
 namespace PastryShop;
-
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Storage;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using PastryServer.Helper_Files;
 
 public partial class Register_Page : ContentPage
 {
@@ -21,11 +17,11 @@ public partial class Register_Page : ContentPage
     {
         string gmail = register_gmail_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
-        if (!Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail is invalid"; return; }
+        if (!Checks.Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail is invalid"; return; }
 
         string password = register_password_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(password)) { register_errors_label.Text = "password cant be empty"; return; }
-        if (!Is_Password_Valid_(password)) { register_errors_label.Text = "password is invalid ( must have big and small letter as well as number nad special character)";  return; }
+        if (!Checks.Is_Password_Valid_(password)) { register_errors_label.Text = "password is invalid ( must have big and small letter as well as number nad special character)";  return; }
 
         string repeat_password = register_password_entry_repeat.Text?.Trim() ?? "";
         if (password != repeat_password) { register_errors_label.Text = "passwords do not match"; return; }
@@ -49,7 +45,7 @@ public partial class Register_Page : ContentPage
     {
         string gmail = register_gmail_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
-        if (!Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail must be valid"; return; }
+        if (!Checks.Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail must be valid"; return; }
 
         var response = await client.PostAsJsonAsync("Auth/SentVerificationGmail", new { gmail = gmail });
 
@@ -59,21 +55,5 @@ public partial class Register_Page : ContentPage
     public async void Go_To_Login_(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new Login_Page());
-    }
-
-    public bool Is_Gmail_Valid_(string gmail)
-    {
-        if (string.IsNullOrWhiteSpace(gmail)) { return false; }
-
-        string pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
-        if (!Regex.IsMatch(gmail, pattern, RegexOptions.IgnoreCase)) { return false; }
-
-        return true;
-    }
-
-    public bool Is_Password_Valid_(string password)
-    {
-        string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{3,}$";
-        return Regex.IsMatch(password, pattern);
     }
 }

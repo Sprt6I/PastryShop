@@ -16,7 +16,7 @@
         
         <ListView x:Name="products_list_view"
                   HasUnevenRows="True"
-                  ItemSelected="products_list_view_item_selected">
+                  ItemSelected="Product_Selection_Changed_">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

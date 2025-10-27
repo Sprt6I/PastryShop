@@ -44,15 +44,7 @@ public partial class Products_Manager_Page : ContentPage
         }
     }
 
-    private void Products_List_View_Item_Selectedd(object sender , SelectedItemChangedEventArgs e)
-    {
-        if (e.SelectedItem is Product selected_product)
-        {
-            current_product = selected_product;
-        }
-    }
-
-    public async void Update_Product_(object sender, EventArgs e)
+    public async void Update_Products_(object sender, EventArgs e)
     {
         if (current_product == null)
         {
@@ -67,5 +59,13 @@ public partial class Products_Manager_Page : ContentPage
             await DisplayAlert("Error", "Failed to update product.", "OK");
         }
 
-    }   
+    } 
+
+    public void Product_Selection_Changed_(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (e.SelectedItem is Product selected_product)
+        {
+            current_product = selected_product;
+        }
+    }
 }

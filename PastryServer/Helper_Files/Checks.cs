@@ -2,9 +2,9 @@
 
 namespace PastryServer.Helper_Files
 {
-    public class Checks
+    public static class Checks
     {
-        public bool Is_Gmail_Valid_(string gmail)
+        public static bool Is_Gmail_Valid_(string gmail)
         {
             if (string.IsNullOrWhiteSpace(gmail)) { return false; }
 
@@ -14,7 +14,7 @@ namespace PastryServer.Helper_Files
             return true;
         }
 
-        public bool Is_Password_Valid_(string password)
+        public static bool Is_Password_Valid_(string password)
         {
             string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{3,}$";
             return Regex.IsMatch(password, pattern);
