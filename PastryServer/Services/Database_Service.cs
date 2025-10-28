@@ -76,6 +76,22 @@ namespace PastryServer.Services
             return products;
         }
 
+        public async Task<List<Product_Group>> Get_All_Products_Grouped_By_Category_()
+        {
+            var products = await database.Table<Product>().ToListAsync();
+
+            var grouped = products
+                .GroupBy(p => p.Category)
+                .Select(g => new Product_Group
+                {
+                    Category = g.Key,
+                    Products = g.ToList()
+                })
+                .ToList();
+
+            return grouped;
+        }
+
         public async Task Update_Products_(Product product)
         {
             await database.UpdateAsync(product);

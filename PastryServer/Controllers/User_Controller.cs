@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
-using System.Text.RegularExpressions;
 using PastryServer.Models;
 using PastryServer.Services;
+using PastryServer.Helper_Files;
 
 namespace PastryServer.Controllers
 {
@@ -32,11 +32,11 @@ namespace PastryServer.Controllers
         {
             string gmail = request.gmail;
             if (string.IsNullOrWhiteSpace(gmail)) { Console.WriteLine("[MAIN]: no gmail"); return BadRequest("Email required"); }
-            if (!Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
+            if (!Checks.Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
 
             string password = request.password;
             if (string.IsNullOrWhiteSpace(password)) { Console.WriteLine("[MAIN]: no password"); return BadRequest("Password required"); }
-            if (!Is_Password_Valid_(password)) { Console.WriteLine("[MAIN]: password isnt valid"); return BadRequest("Password isn\'t valid"); }
+            if (!Checks.Is_Password_Valid_(password)) { Console.WriteLine("[MAIN]: password isnt valid"); return BadRequest("Password isn\'t valid"); }
 
             string verification_code = request.verification_code;
             if (string.IsNullOrWhiteSpace(verification_code)) { Console.WriteLine("[MAIN]: no code"); return BadRequest("Verification Code required"); }
@@ -54,11 +54,11 @@ namespace PastryServer.Controllers
         {
             string gmail = request.gmail;
             if (string.IsNullOrWhiteSpace(gmail)) { Console.WriteLine("[MAIN]: no gmail"); return BadRequest("Email required"); }
-            if (!Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
+            if (!Checks.Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
 
             string password = request.password;
             if (string.IsNullOrWhiteSpace(password)) { Console.WriteLine("[MAIN]: no password"); return BadRequest("Password required"); }
-            if (!Is_Password_Valid_(password)) { Console.WriteLine("[MAIN]: password isnt valid"); return BadRequest("Password isn\'t valid"); }
+            if (!Checks.Is_Password_Valid_(password)) { Console.WriteLine("[MAIN]: password isnt valid"); return BadRequest("Password isn\'t valid"); }
 
             bool password_is_correct = await database.Check_Password_By_Gmail_(gmail, password);
             if (!password_is_correct) { return Unauthorized("User doen\'t exist or password is invalid"); }
@@ -71,7 +71,7 @@ namespace PastryServer.Controllers
         {
             string gmail = request.gmail;
             if (string.IsNullOrWhiteSpace(gmail)) { Console.WriteLine("[MAIN]: no gmail"); return BadRequest("Email required"); }
-            if (!Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
+            if (!Checks.Is_Gmail_Valid_(gmail)) { Console.WriteLine("[MAIN]: gmail isnt valid"); return BadRequest("Email isn\'t valid"); }
 
             string code = RandomNumberGenerator.GetInt32(100000, 1000000).ToString();
 
@@ -81,22 +81,6 @@ namespace PastryServer.Controllers
             Console.WriteLine("[MAIN]: code sent");
 
             return Ok();
-        }
-
-        private bool Is_Gmail_Valid_(string gmail)
-        {
-            if (string.IsNullOrWhiteSpace(gmail)) { return false; }
-
-            string pattern = @"^[a-zA-Z0-9._%+-]+@gmail\.com$";
-            if (!Regex.IsMatch(gmail, pattern, RegexOptions.IgnoreCase)) { return false; }
-
-            return true;
-        }
-
-        private bool Is_Password_Valid_(string password)
-        {
-            string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{3,}$";
-            return Regex.IsMatch(password, pattern);
         }
     }
 }

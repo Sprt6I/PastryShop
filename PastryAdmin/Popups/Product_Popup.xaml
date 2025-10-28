@@ -12,7 +12,8 @@
             <Entry Text="{Binding Name, Mode=TwoWay}" />
             <Entry Text="{Binding Description, Mode=TwoWay}" />
             <Picker SelectedItem="{Binding Category}"/>
-            <Entry Text="{Binding In_Stock, Mode=TwoWay}" />
+            <Entry Text="{Binding In_Stock, Mode=TwoWay}" Keyboard="Numeric"/>
+            <Entry Text="{Binding Price, Mode=TwoWay}" Keyboard="Numeric"/>
 
             <Button Text="Save" Clicked="Save_Clicked_"/>
         </VerticalStackLayout>

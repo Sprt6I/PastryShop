@@ -20,7 +20,7 @@
               RowDefinitions="Auto,*">
 
             <Grid x:Name="headerRow"
-                  ColumnDefinitions="Auto,*,*,*,*,*"
+                  ColumnDefinitions="Auto,*,*,*,*,*,*"
                   Padding="5"
                   BackgroundColor="#2A2A2A">
                 <Label Text="ID" FontAttributes="Bold" Grid.Column="1" TextColor="White"/>
@@ -28,6 +28,7 @@
                 <Label Text="Description" FontAttributes="Bold" Grid.Column="3" TextColor="White"/>
                 <Label Text="Category" FontAttributes="Bold" Grid.Column="4" TextColor="White"/>
                 <Label Text="Stock" FontAttributes="Bold" Grid.Column="5" TextColor="White"/>
+                <Label Text="Price" FontAttributes="Bold" Grid.Column="6" TextColor="White"/>
             </Grid>
 
             <CollectionView Grid.Row="1"
@@ -37,7 +38,7 @@
                             SelectionChanged="Product_Selection_Changed_">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Grid ColumnDefinitions="Auto,*,*,*,*,*"
+                        <Grid ColumnDefinitions="Auto,*,*,*,*,*,*"
                               Padding="5">
                             
                             
@@ -46,6 +47,7 @@
                             <Label Text="{Binding Description}" Grid.Column="3" />
                             <Label Text="{Binding Category}" Grid.Column="4" />
                             <Label Text="{Binding In_Stock}" Grid.Column="5" />
+                            <Label Text="{Binding Price}" Grid.Column="6" />
                         </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

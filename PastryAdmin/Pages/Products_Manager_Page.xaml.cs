@@ -12,7 +12,7 @@ public partial class Products_Manager_Page : ContentPage
 
     public ObservableCollection<Product> products_collection { get; set; } = new();
 
-    public Product current_product;
+    public Product current_product = new Product();
 
     public Products_Manager_Page()
 	{

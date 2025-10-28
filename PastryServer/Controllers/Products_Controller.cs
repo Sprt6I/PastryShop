@@ -22,6 +22,13 @@ namespace PastryServer.Controllers
             return Ok(products);
         }
 
+        [HttpGet("GetAllProductsGroupedbyCategory")]
+        public async Task<ActionResult<List<Product_Group>>> Get_All_Products_Groupedby_Category_()
+        {
+            var products_groupedby_category = await database.Get_All_Products_Grouped_By_Category_();
+            return Ok(products_groupedby_category);
+        }
+
         [HttpPost("UpdateProducts")]
         public async Task<IActionResult> Update_Products_([FromBody] Product product)
         {
