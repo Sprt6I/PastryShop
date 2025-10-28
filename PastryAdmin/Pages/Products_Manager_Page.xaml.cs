@@ -1,3 +1,5 @@
+using CommunityToolkit.Maui.Views;
+using PastryAdmin.Popups;
 using PastryServer.Models;
 using System.Collections.ObjectModel;
 using System.Net.Http.Json;
@@ -19,7 +21,8 @@ public partial class Products_Manager_Page : ContentPage
 
         products__list_view.ItemsSource = products_collection;
 
-        BindingContext = this;
+        //BindingContext = this;
+        products__list_view.ItemsSource = products_collection;
 
         Load_Product_Categories_();
         Load_Products_();
@@ -28,19 +31,22 @@ public partial class Products_Manager_Page : ContentPage
     public async void Add_Product_(object sender, EventArgs e)
     {
         string product_name = product_name__entry.Text?.Trim() ?? "";
-        if (string.IsNullOrWhiteSpace(product_name)) { return; }
+        if (string.IsNullOrWhiteSpace(product_name)) { await DisplayAlert("Error", "Add product name", "OK"); return; }
 
         string product_description = product_description__entry.Text?.Trim() ?? "";
-        if (string.IsNullOrWhiteSpace(product_description)) { return; }
+        if (string.IsNullOrWhiteSpace(product_description)) { await DisplayAlert("Error", "Add product description", "OK"); return; }
 
         string product_category = product_category__picker.SelectedItem?.ToString() ?? "";
-        if (string.IsNullOrWhiteSpace(product_category)) { return; }
+        if (string.IsNullOrWhiteSpace(product_category)) { await DisplayAlert("Error", "Add product category", "OK"); return; }
 
         string how_many_in_stock = how_many_in_stock__entry.Text?.Trim() ?? "";
-        if (string.IsNullOrEmpty(how_many_in_stock)) { return; }
+        if (string.IsNullOrEmpty(how_many_in_stock)) { await DisplayAlert("Error", "Add how many in stock", "OK"); return; }
         int how_many_in_stock__int = int.Parse(how_many_in_stock);
 
         await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int});
+
+
+        await Load_Products_();
     }
 
     private async Task Load_Product_Categories_()
@@ -83,28 +89,30 @@ public partial class Products_Manager_Page : ContentPage
         }
     }
 
-    public async void Update_Products_(object sender, EventArgs e)
+    public async void Update_Product_(Product product)
     {
-        if (current_product == null)
-        {
-            await DisplayAlert("Error", "No product selected.", "OK");
-            return;
-        }
-
-        var response = await client.PostAsJsonAsync("Products/UpdateProducts", products_collection.ToList());
+        var response = await client.PostAsJsonAsync("Products/UpdateProducts", product);
 
         if (!response.IsSuccessStatusCode)
         {
             await DisplayAlert("Error", "Failed to update product.", "OK"); return;
         }
 
+        Load_Products_();
     } 
 
-    public void Product_Selection_Changed_(object sender, SelectedItemChangedEventArgs e)
+    public async void Product_Selection_Changed_(object sender, SelectionChangedEventArgs e)
     {
-        if (e.SelectedItem is Product selected_product)
-        {
-            current_product = selected_product;
-        }
+        Product selected_product = (Product)e.CurrentSelection.FirstOrDefault() ?? null;
+        if (selected_product == null) { return; }
+
+        current_product = selected_product;
+
+        var popup = new Product_Popup(selected_product);
+        await this.ShowPopupAsync(popup);
+
+        Update_Product_(current_product);
+
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

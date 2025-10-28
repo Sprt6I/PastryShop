@@ -5,6 +5,7 @@
 
     <VerticalStackLayout>
         <Label Text="Admin"/>
+        <Button Text="Manage Products" Clicked="Go_To_Product_Manager_"/>
     </VerticalStackLayout>
 
 </ContentPage>

@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PastryAdmin.Products_Manager_Page"
              Title="Products_Manager_Page">
-    <HorizontalStackLayout>
-        <VerticalStackLayout>
+    <Grid ColumnDefinitions="0.2*, 0.8*">
+        <VerticalStackLayout Grid.Column="0">
             <Entry x:Name="product_name__entry" Placeholder="Name"/>
             <Entry x:Name="product_description__entry" Placeholder="Description" />
             <Picker x:Name="product_category__picker"/>
@@ -15,22 +15,41 @@
         </VerticalStackLayout>
 
 
-        <ListView x:Name="products__list_view"
-                  HasUnevenRows="True"
-                  ItemSelected="Product_Selection_Changed_">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold"/>
-                            <Label Text="{Binding Description}" FontSize="14" />
-                            <Label Text="Stock: " FontAttributes="Bold"
-                                   TextColor="Gray"/>
-                            <Label Text="{Binding In_Stock}" />
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </HorizontalStackLayout>
+        <Grid Grid.Column="1"
+              Padding="10"
+              RowDefinitions="Auto,*">
+
+            <Grid x:Name="headerRow"
+                  ColumnDefinitions="Auto,*,*,*,*,*"
+                  Padding="5"
+                  BackgroundColor="#2A2A2A">
+                <Label Text="ID" FontAttributes="Bold" Grid.Column="1" TextColor="White"/>
+                <Label Text="Name" FontAttributes="Bold" Grid.Column="2" TextColor="White"/>
+                <Label Text="Description" FontAttributes="Bold" Grid.Column="3" TextColor="White"/>
+                <Label Text="Category" FontAttributes="Bold" Grid.Column="4" TextColor="White"/>
+                <Label Text="Stock" FontAttributes="Bold" Grid.Column="5" TextColor="White"/>
+            </Grid>
+
+            <CollectionView Grid.Row="1"
+                            x:Name="products__list_view"
+                            ItemsSource="{Binding products_collection}"
+                            SelectionMode="Single"
+                            SelectionChanged="Product_Selection_Changed_">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="Auto,*,*,*,*,*"
+                              Padding="5">
+                            
+                            
+                            <Label Text="{Binding Id}" Grid.Column="1" />
+                            <Label Text="{Binding Name}" Grid.Column="2" />
+                            <Label Text="{Binding Description}" Grid.Column="3" />
+                            <Label Text="{Binding Category}" Grid.Column="4" />
+                            <Label Text="{Binding In_Stock}" Grid.Column="5" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
 </ContentPage>

@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using PastryServer.Models;
 using PastryServer.Services;
-using Microsoft.Extensions.Configuration;
 
 namespace PastryServer.Controllers
 {

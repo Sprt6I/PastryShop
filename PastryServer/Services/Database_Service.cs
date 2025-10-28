@@ -1,8 +1,5 @@
-﻿using BCrypt.Net;
-using Org.BouncyCastle.Crypto.Macs;
-using PastryServer.Models;
+﻿using PastryServer.Models;
 using SQLite;
-using System.Data;
 
 namespace PastryServer.Services
 {
@@ -22,10 +19,15 @@ namespace PastryServer.Services
             database.CreateTableAsync<Product_Category>().Wait();
             database.CreateTableAsync<Admin>().Wait();
 
-            if (database.Table<Admin>().CountAsync().Result == 0)
+            if (database.Table<Admin>().CountAsync().Result == 0) { database.InsertAsync(new Admin { Login = "admin", Password = BCrypt.Net.BCrypt.HashPassword("password") }).Wait(); }
+            if (database.Table<Product_Category>().CountAsync().Result == 0)
             {
-                database.InsertAsync(new Admin { Login = "admin", Password = BCrypt.Net.BCrypt.HashPassword("password") }).Wait();
+                database.InsertAsync(new Product_Category { Name = "Cakes" }).Wait();
+                database.InsertAsync(new Product_Category { Name = "Pastries" }).Wait();
+                database.InsertAsync(new Product_Category { Name = "Breads" }).Wait();
             }
+
+
         }
 
         public async Task Add_User_(string gmail, string password)
@@ -47,7 +49,7 @@ namespace PastryServer.Services
         {
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
-            if (user.Password != password) {  return false; }
+            if (user.Password != password) { return false; }
 
             return true;
         }
@@ -77,6 +79,14 @@ namespace PastryServer.Services
         public async Task Update_Products_(Product product)
         {
             await database.UpdateAsync(product);
+        }
+
+        public async Task<(int, string)> Add_Product_(Product product)
+        {
+            var response = await database.Table<Product>().Where(p => p.Name == product.Name).FirstOrDefaultAsync();
+            if (response != null) { return (1, "Product already exists"); }
+            await database.InsertAsync(product);
+            return (0, "Product added successfully");
         }
 
         public async Task<List<Product_Category>> Get_All_Product_Categories_()

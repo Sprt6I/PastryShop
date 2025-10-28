@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PastryServer.Models;
 using PastryServer.Services;
 
@@ -16,7 +15,7 @@ namespace PastryServer.Controllers
             this.database = database;
         }
 
-        [HttpPost("GetAllProducts")]
+        [HttpGet("GetAllProducts")]
         public async Task<ActionResult<List<Product>>> Get_All_Products_()
         {
             var products = await database.Get_All_Products_();
@@ -30,7 +29,17 @@ namespace PastryServer.Controllers
             return Ok();
         }
 
-        [HttpPost("GetAllProductCategories")]
+        [HttpPost("AddProduct")]
+        public async Task<IActionResult> Add_Product_([FromBody] Product product)
+        {
+            (int, string) response = await database.Add_Product_(product);
+
+            if (response.Item1 != 0) { return BadRequest(response.Item2); }
+
+            return Ok();
+        }
+
+        [HttpGet("GetAllProductCategories")]
         public async Task<ActionResult<List<Product_Category>>> Get_All_Product_Categories_() {
             var product_categories = await database.Get_All_Product_Categories_();
 
