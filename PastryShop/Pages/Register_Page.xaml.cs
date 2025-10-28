@@ -29,8 +29,7 @@ public partial class Register_Page : ContentPage
         string code = register_code_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(code)) { register_errors_label.Text = "code cant be empty"; return; }
 
-        var password_hash = BCrypt.Net.BCrypt.HashPassword(password);
-        var response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password_hash, verification_code = code });
+        var response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password, verification_code = code });
 
         register_errors_label.Text = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode) { return; }

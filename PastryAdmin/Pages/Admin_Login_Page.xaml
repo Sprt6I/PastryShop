@@ -8,6 +8,8 @@
         <Entry x:Name="login__entry" Placeholder="login"/>
         <Entry x:Name="password__entry" Placeholder="password"/>
 
+        <Label x:Name="error__label" TextColor="Red"/>
+
         <Button Text="Login" Clicked="Login_"/>
     </StackLayout>
 </ContentPage>

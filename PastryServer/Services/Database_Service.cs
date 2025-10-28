@@ -1,7 +1,8 @@
-﻿using SQLite;
-using BCrypt.Net;
-using System.Data;
+﻿using BCrypt.Net;
+using Org.BouncyCastle.Crypto.Macs;
 using PastryServer.Models;
+using SQLite;
+using System.Data;
 
 namespace PastryServer.Services
 {
@@ -19,6 +20,12 @@ namespace PastryServer.Services
             database.CreateTableAsync<Address>().Wait();
             database.CreateTableAsync<Product>().Wait();
             database.CreateTableAsync<Product_Category>().Wait();
+            database.CreateTableAsync<Admin>().Wait();
+
+            if (database.Table<Admin>().CountAsync().Result == 0)
+            {
+                database.InsertAsync(new Admin { Login = "admin", Password = BCrypt.Net.BCrypt.HashPassword("password") }).Wait();
+            }
         }
 
         public async Task Add_User_(string gmail, string password)
@@ -76,6 +83,14 @@ namespace PastryServer.Services
         {
             var product_categories = await database.Table<Product_Category>().ToListAsync();
             return product_categories;
+        }
+
+        public async Task<bool> Admin_Login_(Admin admin)
+        {
+            var requested = await database.Table<Admin>().Where(a => a.Login == admin.Login).FirstOrDefaultAsync();
+            if (requested == null || !BCrypt.Net.BCrypt.Verify(admin.Password, requested.Password)) { return false; }
+
+            return true;
         }
     }
 }

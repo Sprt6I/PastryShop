@@ -15,5 +15,14 @@ namespace PastryServer.Controllers
         {
             this.database = database;
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] Admin admin)
+        {
+            bool response = await database.Admin_Login_(admin);
+            if (!response) { return BadRequest("Login or Password isn\'t valid"); }
+
+            return Ok();
+        }
     }
 }

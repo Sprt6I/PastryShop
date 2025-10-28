@@ -20,19 +20,18 @@ public partial class Login_Page : ContentPage
         if (!Checks.Is_Gmail_Valid_(gmail)) { login_errors_label.Text = "Gmail must be correct"; return; }
 
         string password = login_password_entry.Text?.Trim() ?? "";
-        //login_password_entry.Text = "";
         if (string.IsNullOrWhiteSpace(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Checks.Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
             
-        var password_hash = BCrypt.Net.BCrypt.HashPassword(password);
-        var response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password_hash });
+        var response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
 
         if (!response.IsSuccessStatusCode) { login_errors_label.Text = await response.Content.ReadAsStringAsync();  return; }
 
         login_errors_label.Text = "logged";
         login_gmail_entry.Text = "";
         login_password_entry.Text = "";
-        // Go_To_Main_App
+
+        await Navigation.PushAsync(new MainPage());
     }
 
     public void Forgot_Password_(object sender, EventArgs e)
