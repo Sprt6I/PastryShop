@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="PastryAdmin.Popups.Product_Popup">
+
+    <VerticalStackLayout>
+        <Entry Text="{Binding current_product.Name, Mode=TwoWay}" />
+        <Entry Text="{Binding current_product.Description, Mode=TwoWay}" />
+        <Picker SelectedItem="{Binding current_Product.Category}"/>
+        <DatePicker Date="{Binding current_product.Available_Date, Mode=TwoWay}" />
+        <Entry Text="{Binding current_product.In_Stock, Mode=TwoWay}" />
+
+        <Button Text="Save" Clicked="Save_Clicked_"/>
+    </VerticalStackLayout>
+</toolkit:Popup>

@@ -5,8 +5,8 @@
              Title="Admin_Login_Page">
     <StackLayout>
         <Label Text="Admin Login"/>
-        <Entry x:Name="login_entry" Placeholder="login"/>
-        <Entry x:Name="password_entry" Placeholder="password"/>
+        <Entry x:Name="login__entry" Placeholder="login"/>
+        <Entry x:Name="password__entry" Placeholder="password"/>
 
         <Button Text="Login" Clicked="Login_"/>
     </StackLayout>

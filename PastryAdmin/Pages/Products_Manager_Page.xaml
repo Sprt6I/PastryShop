@@ -4,17 +4,18 @@
              x:Class="PastryAdmin.Products_Manager_Page"
              Title="Products_Manager_Page">
     <HorizontalStackLayout>
-
         <VerticalStackLayout>
-            <Entry x:Name="product_name_entry" Text="{Binding current_product.Name, Mode=TwoWay}" />
-            <Entry x:Name="product_description_entry" Text="{Binding current_product.Description, Mode=TwoWay}" />
-            <Entry x:Name="product_in_stock_entry" Text="{Binding current_product.In_Stock, Mode=TwoWay}" />
+            <Entry x:Name="product_name__entry" Placeholder="Name"/>
+            <Entry x:Name="product_description__entry" Placeholder="Description" />
+            <Picker x:Name="product_category__picker"/>
 
-            <Button Text="Update Product" Clicked="Update_Products_" />
+            <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" />
+
+            <Button Text="Add" Clicked="Add_Product_"/>
         </VerticalStackLayout>
-        
-        
-        <ListView x:Name="products_list_view"
+
+
+        <ListView x:Name="products__list_view"
                   HasUnevenRows="True"
                   ItemSelected="Product_Selection_Changed_">
             <ListView.ItemTemplate>

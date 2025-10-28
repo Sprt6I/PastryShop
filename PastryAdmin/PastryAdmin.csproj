@@ -58,10 +58,12 @@
 
 	<ItemGroup>
 	  <Compile Include="..\PastryServer\Models\Product.cs" Link="Models\Product.cs" />
+	  <Compile Include="..\PastryServer\Models\Product_Category.cs" Link="Models\Product_Category.cs" />
 	  <Compile Include="..\PastryServer\Models\User.cs" Link="Models\User.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="8.2.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
@@ -73,6 +75,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Products_Manager_Page.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Popups\Product_Popup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

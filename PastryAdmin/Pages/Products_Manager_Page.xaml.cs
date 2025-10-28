@@ -17,14 +17,53 @@ public partial class Products_Manager_Page : ContentPage
 		InitializeComponent();
         client = new HttpClient { BaseAddress = new Uri("https://localhost:5201/") };
 
-        products_list_view.ItemsSource = products_collection;
+        products__list_view.ItemsSource = products_collection;
 
         BindingContext = this;
 
-        Load_Products_Async_();
+        Load_Product_Categories_();
+        Load_Products_();
     }
 
-    private async Task Load_Products_Async_()
+    public async void Add_Product_(object sender, EventArgs e)
+    {
+        string product_name = product_name__entry.Text?.Trim() ?? "";
+        if (string.IsNullOrWhiteSpace(product_name)) { return; }
+
+        string product_description = product_description__entry.Text?.Trim() ?? "";
+        if (string.IsNullOrWhiteSpace(product_description)) { return; }
+
+        string product_category = product_category__picker.SelectedItem?.ToString() ?? "";
+        if (string.IsNullOrWhiteSpace(product_category)) { return; }
+
+        string how_many_in_stock = how_many_in_stock__entry.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(how_many_in_stock)) { return; }
+        int how_many_in_stock__int = int.Parse(how_many_in_stock);
+
+        await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int});
+    }
+
+    private async Task Load_Product_Categories_()
+    {
+        try
+        {
+            var categories_list = await client.GetFromJsonAsync<List<Product_Category>>("Products/GetAllProductCategories");
+            if (categories_list != null)
+            {
+                product_category__picker.Items.Clear();
+                foreach (var category in categories_list)
+                {
+                    product_category__picker.Items.Add(category.Name);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load product categories: {ex.Message}", "OK");
+        }
+    }
+
+    private async Task Load_Products_()
     {
         try
         {
@@ -56,7 +95,7 @@ public partial class Products_Manager_Page : ContentPage
 
         if (!response.IsSuccessStatusCode)
         {
-            await DisplayAlert("Error", "Failed to update product.", "OK");
+            await DisplayAlert("Error", "Failed to update product.", "OK"); return;
         }
 
     } 

@@ -71,5 +71,11 @@ namespace PastryServer.Services
         {
             await database.UpdateAsync(product);
         }
+
+        public async Task<List<Product_Category>> Get_All_Product_Categories_()
+        {
+            var product_categories = await database.Table<Product_Category>().ToListAsync();
+            return product_categories;
+        }
     }
 }
