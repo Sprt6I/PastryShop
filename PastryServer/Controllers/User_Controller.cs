@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using PastryServer.Models;
 using PastryServer.Services;
 using PastryServer.Helper_Files;
+using Org.BouncyCastle.Crypto.Macs;
 
 namespace PastryServer.Controllers
 {
@@ -69,6 +70,15 @@ namespace PastryServer.Controllers
 
             return Ok();
         }
+
+        [HttpPost("GetUserIdByGmail")]
+        public async Task<ActionResult<int>> Get_User_Id__By_Gmail_([FromBody] string gmail)
+        {
+            (bool, int) user_id = await database.Get_User_Id_By_Gmail(gmail);
+            if (user_id.Item1 == false || user_id.Item2 == -1) { Console.WriteLine("Something went really wrong in login, user doens't exist"); return Unauthorized("User doenst exists or soemthing is really wrong"); }
+
+            return Ok(user_id.Item2);
+        }
         
         [HttpPost("SentVerificationGmail")]
         public async Task<IActionResult> Sent_Verification_Gmail([FromBody] Gmail_Request request)
@@ -85,6 +95,18 @@ namespace PastryServer.Controllers
             Console.WriteLine("[MAIN]: code sent");
 
             return Ok();
+        }
+
+        [HttpGet("GetCart")]
+        public async Task<ActionResult<User_Cart>> Get_User_Cart([FromBody] User user)
+        {
+            return await database.Get_User_Cart_(user);
+        }
+
+        [HttpGet("GetAllOrders")]
+        public async Task<ActionResult<List<User_Order>>> Get_User_Orders([FromBody] User user)
+        {
+            return await database.Get_User_Orders(user);
         }
     }
 }

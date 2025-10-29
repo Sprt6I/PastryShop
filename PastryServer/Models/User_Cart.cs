@@ -3,13 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PastryServer.Models
 {
-    public class Address
+    public class User_Cart
     {
         [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+        public int Id { get; set; } = 0;
+        
         [Required]
         public int User_Id { get; set; } = 0;
+
         [Required]
-        public string Address_ { get; set; } = "";
+        public List<Product> Products { get; set; } = new();
     }
 }

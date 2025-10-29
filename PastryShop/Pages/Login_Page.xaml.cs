@@ -31,7 +31,12 @@ public partial class Login_Page : ContentPage
         login_gmail_entry.Text = "";
         login_password_entry.Text = "";
 
-        await Navigation.PushAsync(new MainPage());
+        var res = await client.PostAsJsonAsync("Auth/GetUserIdByGmail", new { gmail=gmail });
+        if (!res.IsSuccessStatusCode) { return; }
+
+        int user_id = await res.Content.ReadFromJsonAsync<int>();
+
+        await Navigation.PushAsync(new MainPage(user_id));
     }
 
     public void Forgot_Password_(object sender, EventArgs e)

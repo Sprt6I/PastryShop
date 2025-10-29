@@ -5,11 +5,14 @@ namespace PastryShop
 {
     public partial class MainPage : ContentPage
     {
-        private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://localhost:5201/") };
+        private static readonly HttpClient client = new() { BaseAddress = new Uri("https://localhost:5201/") };
+        public int user_id { get; set; }
 
-        public MainPage()
+        public MainPage(int user_id)
         {
             InitializeComponent();
+            this.user_id = user_id;
+            Load_Categories_();
         }
 
         private async void Load_Categories_()
@@ -35,6 +38,8 @@ namespace PastryShop
                 Load_Categories_();
             }
         }
+
+        
     }
 
 }

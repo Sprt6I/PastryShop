@@ -9,7 +9,7 @@ namespace PastryServer.Services
 
         public Database_Service()
         {
-            if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
+            //if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
 
             database = new SQLiteAsyncConnection("pastryshop.db3");
             database.CreateTableAsync<User>().Wait();
@@ -18,6 +18,8 @@ namespace PastryServer.Services
             database.CreateTableAsync<Product>().Wait();
             database.CreateTableAsync<Product_Category>().Wait();
             database.CreateTableAsync<Admin>().Wait();
+            database.CreateTableAsync<User_Cart>().Wait();
+            database.CreateTableAsync<User_Order>().Wait();
 
             if (database.Table<Admin>().CountAsync().Result == 0) { database.InsertAsync(new Admin { Login = "admin", Password = BCrypt.Net.BCrypt.HashPassword("password") }).Wait(); }
             if (database.Table<Product_Category>().CountAsync().Result == 0)
@@ -27,7 +29,10 @@ namespace PastryServer.Services
                 database.InsertAsync(new Product_Category { Name = "Breads" }).Wait();
             }
 
-
+            if (database.Table<Product>().CountAsync().Result == 0)
+            {
+                database.InsertAsync(new Product { Name = "donut1", Description = "a", Category = "Breads", Price = 20, In_Stock = 2 });
+            }
         }
 
         public async Task Add_User_(string gmail, string password)
@@ -52,6 +57,28 @@ namespace PastryServer.Services
             if (!BCrypt.Net.BCrypt.Verify(password, user.Password)) { return false; }
 
             return true;
+        }
+
+        // bool -> tells if operation succeded, 0 if everything is okey
+        // int  -> user id
+        public async Task<(bool, int)> Get_User_Id_By_Gmail(string gmail)
+        {
+            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
+            if (user == null) { return (false, -1); }
+
+            return (true, 0);
+        }
+
+        public async Task<User_Cart> Get_User_Cart_(User user)
+        {
+            var cart = await database.Table<User_Cart>().FirstOrDefaultAsync();
+            return cart;
+        }
+
+        public async Task<List<User_Order>> Get_User_Orders(User user)
+        {
+            var orders = await database.Table<User_Order>().Where(order => order.User_Id == user.Id).ToListAsync();
+            return orders;
         }
 
         public async Task Store_Verification_Code_(string gmail, string code, TimeSpan time)

@@ -1,15 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Custom_Widgets="clr-namespace:PastryShop.Custom_Widgets"
-             x:Class="PastryShop.MainPage"
+             x:Class="PastryShop.Pages.Cart_Page"
+             Title="Cart_Page"
              x:Name="Root">
     <VerticalStackLayout>
         <Custom_Widgets:Navigation_Tab_Widget_For_Main user_id="{Binding Source={x:Reference Root}, Path=user_id}" />
 
-        <VerticalStackLayout x:Name="products_layout">
-            
-        </VerticalStackLayout>
-        
+        <Label Text="Cart"/>
+
+        <VerticalStackLayout x:Name="user_cart_layout"></VerticalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
