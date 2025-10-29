@@ -68,6 +68,8 @@
 
 	<ItemGroup>
 	  <Compile Include="..\PastryServer\Helper_Files\Checks.cs" Link="Helper_Files\Checks.cs" />
+	  <Compile Include="..\PastryServer\Models\Models.cs" Link="Models\Models.cs" />
+	  <Compile Include="..\PastryServer\Models\Product.cs" Link="Models\Product.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -93,6 +95,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Helper_Files\" />
+	  <Folder Include="Models\" />
 	</ItemGroup>
 
 </Project>

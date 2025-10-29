@@ -49,7 +49,7 @@ namespace PastryServer.Services
         {
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
-            if (user.Password != password) { return false; }
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password)) { return false; }
 
             return true;
         }

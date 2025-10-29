@@ -4,9 +4,9 @@
              x:Class="PastryShop.MainPage">
     <VerticalStackLayout>
         <HorizontalStackLayout>
-            <Button Text="Main" Clicked="Go_To_Main_"/>
+            <!--<Button Text="Main" Clicked="Go_To_Main_"/>
             <Button Text="Cart" Clicked="Go_To_Cart_"/>
-            <Button Text="Orders" Clicked="Go_To_Orders_"/>
+            <Button Text="Orders" Clicked="Go_To_Orders_"/>-->
         </HorizontalStackLayout>
 
         <VerticalStackLayout x:Name="products_layout">
