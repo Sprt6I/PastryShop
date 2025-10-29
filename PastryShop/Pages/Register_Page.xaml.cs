@@ -36,7 +36,7 @@ public partial class Register_Page : ContentPage
 
         register_gmail_entry.Text = "";
         register_password_entry.Text = "";
-        Go_To_Login_(null, null);
+        Application.Current.MainPage = new Login_Page();
     }
 
 
@@ -50,9 +50,9 @@ public partial class Register_Page : ContentPage
 
         register_errors_label.Text = await response.Content.ReadAsStringAsync();
     }
-
+    
     public async void Go_To_Login_(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Login_Page());
+        Application.Current.MainPage = new Login_Page();
     }
 }

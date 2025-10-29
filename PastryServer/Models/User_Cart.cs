@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace PastryServer.Models
 {
@@ -8,10 +9,15 @@ namespace PastryServer.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; } = 0;
         
-        [Required]
         public int User_Id { get; set; } = 0;
 
-        [Required]
-        public List<Product> Products { get; set; } = new();
+        public string ProductsJson { get; set; } = "[]";
+
+        [Ignore]
+        public List<Product> Products
+        {
+            get => JsonSerializer.Deserialize<List<Product>>(ProductsJson) ?? new();
+            set => ProductsJson = JsonSerializer.Serialize(value);
+        }
     }
 }

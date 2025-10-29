@@ -72,12 +72,12 @@ namespace PastryServer.Controllers
         }
 
         [HttpPost("GetUserIdByGmail")]
-        public async Task<ActionResult<int>> Get_User_Id__By_Gmail_([FromBody] string gmail)
+        public async Task<ActionResult<int>> Get_User_Id__By_Gmail_([FromBody] GmailRequest req)
         {
-            (bool, int) user_id = await database.Get_User_Id_By_Gmail(gmail);
-            if (user_id.Item1 == false || user_id.Item2 == -1) { Console.WriteLine("Something went really wrong in login, user doens't exist"); return Unauthorized("User doenst exists or soemthing is really wrong"); }
+            int user_id = await database.Get_User_Id_By_Gmail(req.gmail);
+            if (user_id == -1) { Console.WriteLine("Something went really wrong in login, user doens't exist"); return Unauthorized("User doenst exists or soemthing is really wrong"); }
 
-            return Ok(user_id.Item2);
+            return Ok(user_id);
         }
         
         [HttpPost("SentVerificationGmail")]

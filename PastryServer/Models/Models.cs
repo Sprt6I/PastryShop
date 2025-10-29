@@ -23,4 +23,8 @@
         public string Category { get; set; } = string.Empty;
         public List<Product> Products { get; set; } = new();
     }
+    public class GmailRequest
+    {
+        public string gmail { get; set; }
+    }
 }

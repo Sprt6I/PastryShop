@@ -59,14 +59,12 @@ namespace PastryServer.Services
             return true;
         }
 
-        // bool -> tells if operation succeded, 0 if everything is okey
-        // int  -> user id
-        public async Task<(bool, int)> Get_User_Id_By_Gmail(string gmail)
+        public async Task<int> Get_User_Id_By_Gmail(string gmail)
         {
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
-            if (user == null) { return (false, -1); }
+            if (user == null) { return -1; }
 
-            return (true, 0);
+            return user.Id;
         }
 
         public async Task<User_Cart> Get_User_Cart_(User user)

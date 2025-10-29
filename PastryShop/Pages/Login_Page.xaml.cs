@@ -33,10 +33,8 @@ public partial class Login_Page : ContentPage
 
         var res = await client.PostAsJsonAsync("Auth/GetUserIdByGmail", new { gmail=gmail });
         if (!res.IsSuccessStatusCode) { return; }
-
         int user_id = await res.Content.ReadFromJsonAsync<int>();
-
-        await Navigation.PushAsync(new MainPage(user_id));
+        Application.Current.MainPage = new MainPage(user_id);
     }
 
     public void Forgot_Password_(object sender, EventArgs e)
@@ -46,6 +44,6 @@ public partial class Login_Page : ContentPage
 
     public async void Go_To_Register_(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Register_Page());
+        Application.Current.MainPage = new Register_Page();
     }
 }

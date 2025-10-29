@@ -103,8 +103,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Helper_Files\" />
 	  <Folder Include="Models\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Pages\MainPage.xaml.cs">
+	    <DependentUpon>MainPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

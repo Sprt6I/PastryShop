@@ -20,16 +20,16 @@ public partial class Navigation_Tab_Widget_For_Main : ContentView
 
     public async void Go_To_Main_(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new MainPage(user_id));
+        Application.Current.MainPage = new MainPage(user_id);
     }
 
     public async void Go_To_Cart_(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Cart_Page(user_id));
+        Application.Current.MainPage = new Cart_Page(user_id);
     }
 
     public async void Go_To_Orders_(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new Orders_Page(user_id));
+        Application.Current.MainPage = new Orders_Page(user_id);
     }
 }

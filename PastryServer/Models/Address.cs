@@ -7,9 +7,7 @@ namespace PastryServer.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Required]
         public int User_Id { get; set; } = 0;
-        [Required]
         public string Address_ { get; set; } = "";
     }
 }
