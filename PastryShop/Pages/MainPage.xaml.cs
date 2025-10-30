@@ -19,7 +19,12 @@ namespace PastryShop
         {
             try
             {
-                List<Product_Group> products_groupedby_category = await client.GetFromJsonAsync<List<Product_Group>>("Products/GetAllProductsGroupedbyCategory");
+                List<Product_Group>? products_groupedby_category = await client.GetFromJsonAsync<List<Product_Group>>("Products/GetAllProductsGroupedbyCategory");
+                if (products_groupedby_category == null)
+                {
+                    await DisplayAlert("Error", "Failed to load Products.", "OK");
+                    return;
+                }
 
                 foreach (var group in products_groupedby_category)
                 {

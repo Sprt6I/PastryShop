@@ -28,7 +28,7 @@ namespace PastryServer.Services
 
             string hashed_admin_password = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword("password", workFactor: 6));
 
-            if (await database.Table<Admin>().CountAsync() == 0) { database.InsertAsync(new Admin { Login = "admin", Password = hashed_admin_password }); }
+            if (await database.Table<Admin>().CountAsync() == 0) { await database.InsertAsync(new Admin { Login = "admin", Password = hashed_admin_password }); }
             if (await database.Table<Product_Category>().CountAsync() == 0)
             {
                 await database.InsertAsync(new Product_Category { Name = "Cakes" });
@@ -118,17 +118,17 @@ namespace PastryServer.Services
             }
         }
 
-        public async Task<User_Cart> Get_User_Cart_(User user)
+        public async Task<User_Cart> Get_User_Cart_(int user_id)
         {
             try
             {
-                User_Cart cart = await database.Table<User_Cart>().Where(c => c.User_Id == user.Id).FirstOrDefaultAsync();
+                User_Cart cart = await database.Table<User_Cart>().Where(c => c.User_Id == user_id).FirstOrDefaultAsync();
                 return cart;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("[DATABASE]: Error getting user cart - " + ex.Message);
-                return null;
+                return null!;
             }
         }
 

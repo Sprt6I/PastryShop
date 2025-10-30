@@ -21,8 +21,13 @@ namespace PastryServer.Controllers
 
         public AuthController(Gmail_Sender gmailSender, Database_Service databaseService /*Database_Service_External database_external_*/, IConfiguration config)
         {
-            gmail_login = config["Gmail:Login"];
-            gmail_password = config["Gmail:Password"];
+            gmail_login = config["Gmail:Login"] ?? null!;
+            if (gmail_login == null) { throw new Exception("Gmail login is null in AuthController"); }
+            
+            gmail_password = config["Gmail:Password"] ?? null!;
+            if (gmail_password == null) { throw new Exception("Gmail password is null in AuthController"); }
+
+
             gmail_sender = gmailSender;
             database = databaseService;
             //database_external = database_external_;
@@ -96,9 +101,9 @@ namespace PastryServer.Controllers
         }
 
         [HttpGet("GetCart")]
-        public async Task<ActionResult<User_Cart>> Get_User_Cart([FromBody] User user)
+        public async Task<ActionResult<User_Cart>> Get_User_Cart([FromBody] User_Id__Request user_id__request)
         {
-            return await database.Get_User_Cart_(user);
+            return await database.Get_User_Cart_(user_id__request.user_Id);
         }
 
         [HttpGet("GetAllOrders")]

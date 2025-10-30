@@ -23,10 +23,11 @@ public partial class Login_Page : ContentPage
         if (string.IsNullOrWhiteSpace(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Checks.Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
 
-        HttpResponseMessage response = null;
+        HttpResponseMessage? response = null;
         try
         {
             response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
+            if (response == null) { login_errors_label.Text = "Server error, failed to login"; return; }
         }
         catch (Exception ex)
         {
@@ -40,10 +41,11 @@ public partial class Login_Page : ContentPage
         login_gmail_entry.Text = "";
         login_password_entry.Text = "";
 
-        HttpResponseMessage res = null;
+        HttpResponseMessage? res = null;
         try
         {
             res = await client.PostAsJsonAsync("Auth/GetUserIdByGmail", new { gmail = gmail });
+            if (res == null) { login_errors_label.Text = "Server error, failed to login 2"; return; }
         }
         catch (Exception ex)
         {
@@ -53,6 +55,8 @@ public partial class Login_Page : ContentPage
 
         if (!res.IsSuccessStatusCode) { return; }
         int user_id = await res.Content.ReadFromJsonAsync<int>();
+
+        if (Application.Current == null) { login_errors_label.Text = "Application error"; return; }
         Application.Current.MainPage = new MainPage(user_id);
     }
 
@@ -63,6 +67,7 @@ public partial class Login_Page : ContentPage
 
     public async void Go_To_Register_(object sender, EventArgs e)
     {
+        if (Application.Current == null) { login_errors_label.Text = "Application error"; return; }
         Application.Current.MainPage = new Register_Page();
     }
 }

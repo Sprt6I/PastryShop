@@ -99,10 +99,15 @@ public partial class Products_Manager_Page : ContentPage
 
     public async void Update_Product_(Product product)
     {
-        HttpResponseMessage response = null;
+        HttpResponseMessage? response = null;
         try
         {
             response = await client.PostAsJsonAsync("Products/UpdateProducts", product);
+            if (response == null)
+            {
+                await DisplayAlert("Error", "Server error", "Ok");
+                return;
+            }
         }
         catch (Exception ex) {
             await DisplayAlert("Error", $"Server error {ex}", "Ok");

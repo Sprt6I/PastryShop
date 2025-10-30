@@ -29,10 +29,11 @@ public partial class Register_Page : ContentPage
         string code = register_code_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(code)) { register_errors_label.Text = "code cant be empty"; return; }
 
-        HttpResponseMessage response = null;
+        HttpResponseMessage? response = null;
         try
         {
             response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password, verification_code = code });
+            if (response == null) { register_errors_label.Text = "Server error, failed to register"; return; }
         }
         catch (Exception ex)
         {
@@ -45,6 +46,7 @@ public partial class Register_Page : ContentPage
 
         register_gmail_entry.Text = "";
         register_password_entry.Text = "";
+        if (Application.Current == null) { await DisplayAlert("Error", "Failed To Initialize App", "Ok"); return; }
         Application.Current.MainPage = new Login_Page();
     }
 
@@ -69,6 +71,7 @@ public partial class Register_Page : ContentPage
     
     public async void Go_To_Login_(object sender, EventArgs e)
     {
+        if (Application.Current == null) { await DisplayAlert("Error", "Failed To Initialize App", "Ok"); return; }
         Application.Current.MainPage = new Login_Page();
     }
 }
