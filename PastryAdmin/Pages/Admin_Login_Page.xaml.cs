@@ -18,8 +18,16 @@ public partial class Admin_Login_Page : ContentPage
 		string password = password__entry.Text?.Trim() ?? "";
 		if (string.IsNullOrWhiteSpace(password)) { error__label.Text = "Please enter your password."; return; }
 
-        var response = await client.PostAsJsonAsync("Admin/Login", new {login=login, password=password});
-		if (!response.IsSuccessStatusCode) { error__label.Text = "Login failed."; return; }
+        try
+		{
+            var response = await client.PostAsJsonAsync("Admin/Login", new { login = login, password = password });
+            if (!response.IsSuccessStatusCode) { error__label.Text = "Login failed."; return; }
+        }
+        catch(Exception ex)
+		{
+            await DisplayAlert("Error", $"Failed to login, server error: {ex.Message}", "OK");
+        }
+		
 
         await Navigation.PushAsync(new MainPage());
     }

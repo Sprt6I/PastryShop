@@ -23,5 +23,12 @@ namespace PastryServer.Controllers
 
             return Ok();
         }
+
+        [HttpGet("GetAllUsers")]
+        public async Task<ActionResult<List<User>>> Get_All_Users_()
+        {
+            List<User> users = await database.Get_All_Users_();
+            return Ok(users);
+        }
     }
 }

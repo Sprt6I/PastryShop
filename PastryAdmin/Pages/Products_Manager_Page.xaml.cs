@@ -43,7 +43,15 @@ public partial class Products_Manager_Page : ContentPage
         if (string.IsNullOrEmpty(how_many_in_stock)) { await DisplayAlert("Error", "Add how many in stock", "OK"); return; }
         int how_many_in_stock__int = int.Parse(how_many_in_stock);
 
-        await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int});
+        try
+        {
+            await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int});
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Server error {ex}", "Ok");
+            return;
+        }
 
 
         await Load_Products_();
@@ -91,7 +99,15 @@ public partial class Products_Manager_Page : ContentPage
 
     public async void Update_Product_(Product product)
     {
-        var response = await client.PostAsJsonAsync("Products/UpdateProducts", product);
+        HttpResponseMessage response = null;
+        try
+        {
+            response = await client.PostAsJsonAsync("Products/UpdateProducts", product);
+        }
+        catch (Exception ex) {
+            await DisplayAlert("Error", $"Server error {ex}", "Ok");
+            return;
+        }
 
         if (!response.IsSuccessStatusCode)
         {

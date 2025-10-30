@@ -16,7 +16,7 @@ namespace PastryServer.Services
         public async Task Initialize()
         {
 
-            if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
+            //if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
             await database.CreateTableAsync<User>();
             await database.CreateTableAsync<Verification_Code>();
             await database.CreateTableAsync<Address>();
@@ -44,111 +44,234 @@ namespace PastryServer.Services
 
         public async Task Add_User_(string gmail, string password, DateTime date_time)
         {
-            var user = new User { Gmail = gmail, Password = password, Registration_Time_And_Date=date_time};
+            try
+            {
+                var user = new User { Gmail = gmail, Password = password, Registration_Time_And_Date = date_time };
 
-            await database.InsertAsync(user);
+                await database.InsertAsync(user);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error adding user - " + ex.Message);
+            }
         }
 
         public async Task<bool> Check_Password_By_Gmail_(string gmail, string password)
         {
-            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
-            if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist gmail"); return false; }
+            try {
+                User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
+                if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist gmail"); return false; }
 
-            return await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password));
+                return await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error checking password - " + ex.Message);
+                return false;
+            }
         }
 
         public async Task<bool> Login_(string gmail, string password)
         {
-            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
-            if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
-            if (!await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password))) { return false; }
+            try
+            {
+                User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
+                if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
+                if (!await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password))) { return false; }
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error during login - " + ex.Message);
+                return false;
+            }
         }
 
         public async Task<int> Get_User_Id_By_Gmail(string gmail)
         {
-            User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
-            if (user == null) { return -1; }
+            try
+            {
+                User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
+                if (user == null) { return -1; }
 
-            return user.Id;
+                return user.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting user id - " + ex.Message);
+                return -1;
+            }
+        }
+
+        public async Task<List<User>> Get_All_Users_()
+        {
+            try
+            {
+                List<User> users = await database.Table<User>().ToListAsync();
+                return users;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting all users - " + ex.Message);
+                return new List<User>();
+            }
         }
 
         public async Task<User_Cart> Get_User_Cart_(User user)
         {
-            var cart = await database.Table<User_Cart>().Where(c => c.User_Id == user.Id).FirstOrDefaultAsync();
-            return cart;
+            try
+            {
+                User_Cart cart = await database.Table<User_Cart>().Where(c => c.User_Id == user.Id).FirstOrDefaultAsync();
+                return cart;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting user cart - " + ex.Message);
+                return null;
+            }
         }
 
         public async Task<List<User_Order>> Get_User_Orders(User user)
         {
-            var orders = await database.Table<User_Order>().Where(order => order.User_Id == user.Id).ToListAsync();
-            return orders;
+            try
+            {
+                var orders = await database.Table<User_Order>().Where(order => order.User_Id == user.Id).ToListAsync();
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting user orders - " + ex.Message);
+                return new List<User_Order>();
+            }
         }
 
         public async Task Store_Verification_Code_(string gmail, string code, TimeSpan time)
         {
-            await database.Table<Verification_Code>().Where(c => c.Gmail == gmail).DeleteAsync();
+            try
+            {
+                await database.Table<Verification_Code>().Where(c => c.Gmail == gmail).DeleteAsync();
 
-            await database.InsertAsync(new Verification_Code { Gmail = gmail, Code = code, Expires_At = DateTime.UtcNow.Add(time) });
+                await database.InsertAsync(new Verification_Code { Gmail = gmail, Code = code, Expires_At = DateTime.UtcNow.Add(time) });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error storing verification code - " + ex.Message);
+            }
         }
 
         public async Task<bool> Verify_Verification_Code_(string gmail, string code)
         {
-            var requested_code = await database.Table<Verification_Code>().Where(c => c.Gmail == gmail).FirstOrDefaultAsync();
-            if (requested_code == null || requested_code.Expires_At < DateTime.UtcNow || code != requested_code.Code) { Console.WriteLine("[DATABASE]: code expired"); return false; }
+            try
+            {
+                var requested_code = await database.Table<Verification_Code>().Where(c => c.Gmail == gmail).FirstOrDefaultAsync();
+                if (requested_code == null || requested_code.Expires_At < DateTime.UtcNow || code != requested_code.Code) { Console.WriteLine("[DATABASE]: code expired"); return false; }
 
-            await database.Table<Verification_Code>().Where(c => c.Id == requested_code.Id).DeleteAsync();
-            return true;
+                await database.Table<Verification_Code>().Where(c => c.Id == requested_code.Id).DeleteAsync();
+                return true;
+            }
+            catch
+            {
+                Console.WriteLine("[DATABASE]: Error verifying verification code");
+                return false;
+            }
         }
 
         public async Task<List<Product>> Get_All_Products_()
         {
-            var products = await database.Table<Product>().ToListAsync();
-            return products;
+            try
+            {
+                var products = await database.Table<Product>().ToListAsync();
+                return products;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting all products - " + ex.Message);
+                return new List<Product>();
+            }
         }
 
         public async Task<List<Product_Group>> Get_All_Products_Grouped_By_Category_()
         {
-            var products = await database.Table<Product>().ToListAsync();
+            try
+            {
 
-            var grouped = products
-                .GroupBy(p => p.Category)
-                .Select(g => new Product_Group
-                {
-                    Category = g.Key,
-                    Products = g.ToList()
-                })
-                .ToList();
+                var products = await database.Table<Product>().ToListAsync();
 
-            return grouped;
+                var grouped = products
+                    .GroupBy(p => p.Category)
+                    .Select(g => new Product_Group
+                    {
+                        Category = g.Key,
+                        Products = g.ToList()
+                    })
+                    .ToList();
+
+                return grouped;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting products grouped by category - " + ex.Message);
+                return new List<Product_Group>();
+            }
         }
 
         public async Task Update_Products_(Product product)
         {
-            await database.UpdateAsync(product);
+            try
+            {
+                await database.UpdateAsync(product);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error updating product - " + ex.Message);
+            }
         }
 
         public async Task<(int, string)> Add_Product_(Product product)
         {
-            var response = await database.Table<Product>().Where(p => p.Name == product.Name).FirstOrDefaultAsync();
-            if (response != null) { return (1, "Product already exists"); }
-            await database.InsertAsync(product);
-            return (0, "Product added successfully");
+            try
+            {
+                var response = await database.Table<Product>().Where(p => p.Name == product.Name).FirstOrDefaultAsync();
+                if (response != null) { return (1, "Product already exists"); }
+                await database.InsertAsync(product);
+                return (0, "Product added successfully");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error adding product - " + ex.Message);
+                return (2, "Error adding product");
+            }
         }
 
         public async Task<List<Product_Category>> Get_All_Product_Categories_()
         {
-            var product_categories = await database.Table<Product_Category>().ToListAsync();
-            return product_categories;
+            try
+            {
+                var product_categories = await database.Table<Product_Category>().ToListAsync();
+                return product_categories;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error getting product categories - " + ex.Message);
+                return new List<Product_Category>();
+            }
         }
 
         public async Task<bool> Admin_Login_(Admin admin)
         {
-            var requested = await database.Table<Admin>().Where(a => a.Login == admin.Login).FirstOrDefaultAsync();
-            if (requested == null || ! await Task.Run(() => BCrypt.Net.BCrypt.Verify(admin.Password, requested.Password))) { return false; }
+            try
+            {
+                var requested = await database.Table<Admin>().Where(a => a.Login == admin.Login).FirstOrDefaultAsync();
+                if (requested == null || ! await Task.Run(() => BCrypt.Net.BCrypt.Verify(admin.Password, requested.Password))) { return false; }
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[DATABASE]: Error during admin login - " + ex.Message);
+                return false;
+            }
         }
     }
 }

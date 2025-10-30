@@ -29,7 +29,16 @@ public partial class Register_Page : ContentPage
         string code = register_code_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(code)) { register_errors_label.Text = "code cant be empty"; return; }
 
-        var response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password, verification_code = code });
+        HttpResponseMessage response = null;
+        try
+        {
+            response = await client.PostAsJsonAsync("Auth/Register", new { gmail = gmail, password = password, verification_code = code });
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Server error, failed to register {ex}", "Ok");
+            return;
+        }
 
         register_errors_label.Text = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode) { return; }
@@ -46,9 +55,16 @@ public partial class Register_Page : ContentPage
         if (string.IsNullOrWhiteSpace(gmail)) { register_errors_label.Text = "gmail cant be empty"; return; }
         if (!Checks.Is_Gmail_Valid_(gmail)) { register_errors_label.Text = "gmail must be valid"; return; }
 
-        var response = await client.PostAsJsonAsync("Auth/SentVerificationGmail", new { gmail = gmail });
-
-        register_errors_label.Text = await response.Content.ReadAsStringAsync();
+        try
+        {
+            HttpResponseMessage response = await client.PostAsJsonAsync("Auth/SentVerificationGmail", new { gmail = gmail });
+            register_errors_label.Text = await response.Content.ReadAsStringAsync();
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Server error, failed to send code {ex}", "Ok");
+            return;
+        }
     }
     
     public async void Go_To_Login_(object sender, EventArgs e)

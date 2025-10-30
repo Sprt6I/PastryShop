@@ -22,8 +22,17 @@ public partial class Login_Page : ContentPage
         string password = login_password_entry.Text?.Trim() ?? "";
         if (string.IsNullOrWhiteSpace(password)) { login_errors_label.Text = "password can't be empty"; return; }
         if (!Checks.Is_Password_Valid_(password)) { login_errors_label.Text = "password must be valid"; return; }
-            
-        var response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
+
+        HttpResponseMessage response = null;
+        try
+        {
+            response = await client.PostAsJsonAsync("Auth/Login", new { gmail = gmail, password = password });
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Server error, failed to login {ex}", "Ok");
+            return;
+        }
 
         if (!response.IsSuccessStatusCode) { login_errors_label.Text = await response.Content.ReadAsStringAsync();  return; }
 
@@ -31,7 +40,17 @@ public partial class Login_Page : ContentPage
         login_gmail_entry.Text = "";
         login_password_entry.Text = "";
 
-        var res = await client.PostAsJsonAsync("Auth/GetUserIdByGmail", new { gmail=gmail });
+        HttpResponseMessage res = null;
+        try
+        {
+            res = await client.PostAsJsonAsync("Auth/GetUserIdByGmail", new { gmail = gmail });
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Server error, failed to login 2 {ex}", "Ok");
+            return;
+        }
+
         if (!res.IsSuccessStatusCode) { return; }
         int user_id = await res.Content.ReadFromJsonAsync<int>();
         Application.Current.MainPage = new MainPage(user_id);

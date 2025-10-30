@@ -15,7 +15,7 @@ namespace PastryShop
             Load_Categories_();
         }
 
-        private async void Load_Categories_()
+        private async void Load_Categories_() // TODO: Group here and remove it from the server
         {
             try
             {
@@ -34,7 +34,7 @@ namespace PastryShop
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Error", "Failed to load Products.", "OK");
+                await DisplayAlert("Error", $"Failed to load Products. {ex}", "OK");
                 Load_Categories_();
             }
         }
