@@ -2,7 +2,7 @@ namespace PastryShop.Pages;
 
 public partial class Cart_Page : ContentPage
 {
-    public int user_id;
+    public int user_id { get; set; }
     public Cart_Page(int user_id)
 	{
 		InitializeComponent();

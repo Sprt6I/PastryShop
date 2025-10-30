@@ -9,35 +9,42 @@ namespace PastryServer.Services
 
         public Database_Service()
         {
-            //if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
-
             database = new SQLiteAsyncConnection("pastryshop.db3");
-            database.CreateTableAsync<User>().Wait();
-            database.CreateTableAsync<Verification_Code>().Wait();
-            database.CreateTableAsync<Address>().Wait();
-            database.CreateTableAsync<Product>().Wait();
-            database.CreateTableAsync<Product_Category>().Wait();
-            database.CreateTableAsync<Admin>().Wait();
-            database.CreateTableAsync<User_Cart>().Wait();
-            database.CreateTableAsync<User_Order>().Wait();
+            Initialize().Wait();
+        }
 
-            if (database.Table<Admin>().CountAsync().Result == 0) { database.InsertAsync(new Admin { Login = "admin", Password = BCrypt.Net.BCrypt.HashPassword("password") }).Wait(); }
-            if (database.Table<Product_Category>().CountAsync().Result == 0)
+        public async Task Initialize()
+        {
+
+            if (File.Exists("pastryshop.db3")) { File.Delete("pastryshop.db3"); }
+            await database.CreateTableAsync<User>();
+            await database.CreateTableAsync<Verification_Code>();
+            await database.CreateTableAsync<Address>();
+            await database.CreateTableAsync<Product>();
+            await database.CreateTableAsync<Product_Category>();
+            await database.CreateTableAsync<Admin>();
+            await database.CreateTableAsync<User_Cart>();
+            await database.CreateTableAsync<User_Order>();
+
+            string hashed_admin_password = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword("password", workFactor: 6));
+
+            if (await database.Table<Admin>().CountAsync() == 0) { database.InsertAsync(new Admin { Login = "admin", Password = hashed_admin_password }); }
+            if (await database.Table<Product_Category>().CountAsync() == 0)
             {
-                database.InsertAsync(new Product_Category { Name = "Cakes" }).Wait();
-                database.InsertAsync(new Product_Category { Name = "Pastries" }).Wait();
-                database.InsertAsync(new Product_Category { Name = "Breads" }).Wait();
+                await database.InsertAsync(new Product_Category { Name = "Cakes" });
+                await database.InsertAsync(new Product_Category { Name = "Pastries" });
+                await database.InsertAsync(new Product_Category { Name = "Breads" });
             }
 
-            if (database.Table<Product>().CountAsync().Result == 0)
+            if (await database.Table<Product>().CountAsync() == 0)
             {
-                database.InsertAsync(new Product { Name = "donut1", Description = "a", Category = "Breads", Price = 20, In_Stock = 2 });
+                await database.InsertAsync(new Product { Name = "donut1", Description = "a", Category = "Breads", Price = 20, In_Stock = 2 });
             }
         }
 
-        public async Task Add_User_(string gmail, string password)
+        public async Task Add_User_(string gmail, string password, DateTime date_time)
         {
-            var user = new User { Gmail = gmail, Password = password };
+            var user = new User { Gmail = gmail, Password = password, Registration_Time_And_Date=date_time};
 
             await database.InsertAsync(user);
         }
@@ -47,14 +54,14 @@ namespace PastryServer.Services
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist gmail"); return false; }
 
-            return BCrypt.Net.BCrypt.Verify(password, user.Password);
+            return await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password));
         }
 
         public async Task<bool> Login_(string gmail, string password)
         {
             User user = await database.Table<User>().Where(user => user.Gmail == gmail).FirstOrDefaultAsync();
             if (user == null) { Console.WriteLine("[DATABASE]: user doenst exist"); return false; }
-            if (!BCrypt.Net.BCrypt.Verify(password, user.Password)) { return false; }
+            if (!await Task.Run(() => BCrypt.Net.BCrypt.Verify(password, user.Password))) { return false; }
 
             return true;
         }
@@ -69,7 +76,7 @@ namespace PastryServer.Services
 
         public async Task<User_Cart> Get_User_Cart_(User user)
         {
-            var cart = await database.Table<User_Cart>().FirstOrDefaultAsync();
+            var cart = await database.Table<User_Cart>().Where(c => c.User_Id == user.Id).FirstOrDefaultAsync();
             return cart;
         }
 
@@ -139,7 +146,7 @@ namespace PastryServer.Services
         public async Task<bool> Admin_Login_(Admin admin)
         {
             var requested = await database.Table<Admin>().Where(a => a.Login == admin.Login).FirstOrDefaultAsync();
-            if (requested == null || !BCrypt.Net.BCrypt.Verify(admin.Password, requested.Password)) { return false; }
+            if (requested == null || ! await Task.Run(() => BCrypt.Net.BCrypt.Verify(admin.Password, requested.Password))) { return false; }
 
             return true;
         }

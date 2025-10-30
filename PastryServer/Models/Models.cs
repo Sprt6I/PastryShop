@@ -25,6 +25,6 @@
     }
     public class GmailRequest
     {
-        public string gmail { get; set; }
+        public string gmail { get; set; } = string.Empty;
     }
 }
