@@ -12,6 +12,8 @@ namespace PastryServer.Models
 
         public string Password { get; set; } = "";
 
+        public DateTime Registration_Time_And_Date { get; set; }
+
         public bool verified_gmail { get; set; } = false;
 
         public int address_id { get; set; } // user can have multiple adresses so there will be separate tabnle with addresses and will show only with user_id for that user

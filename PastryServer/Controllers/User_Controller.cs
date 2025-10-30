@@ -45,9 +45,9 @@ namespace PastryServer.Controllers
             if (!await database.Verify_Verification_Code_(gmail, verification_code)) { Console.WriteLine("[MAIN]: wrong code");  return BadRequest("Wrong Verification Code"); }
             if (await database.Login_(gmail, password)) { Console.WriteLine("[MAIN]: user exists"); return BadRequest("User Already Exists");  }
 
-            string password_hash = BCrypt.Net.BCrypt.HashPassword(password);
+            string password_hash = await Task.Run(() => BCrypt.Net.BCrypt.HashPassword(password, workFactor: 6));
 
-            await database.Add_User_(gmail, password_hash);
+            await database.Add_User_(gmail, password_hash, DateTime.UtcNow);
 
             return Ok();
         }
@@ -62,8 +62,6 @@ namespace PastryServer.Controllers
             string password = request.password;
             if (string.IsNullOrWhiteSpace(password)) { Console.WriteLine("[MAIN]: no password"); return BadRequest("Password required"); }
             if (!Checks.Is_Password_Valid_(password)) { Console.WriteLine("[MAIN]: password isnt valid"); return BadRequest("Password isn\'t valid"); }
-
-            //string password_hash = BCrypt.Net.BCrypt.HashPassword(password);
 
             bool password_is_correct = await database.Check_Password_By_Gmail_(gmail, password);
             if (!password_is_correct) { return Unauthorized("User doen\'t exist or password is invalid"); }
