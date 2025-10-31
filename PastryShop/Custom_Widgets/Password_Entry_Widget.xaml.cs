@@ -28,8 +28,6 @@ public partial class Password_Entry_Widget : ContentView
 		set => SetValue(TextProperty, value);
 	}
 
-	public event EventHandler button_clicked;
-
 	private void Show_Password_(object sender, EventArgs e)
 	{
 		is_password = !is_password;

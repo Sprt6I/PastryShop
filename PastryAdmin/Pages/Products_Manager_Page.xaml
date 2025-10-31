@@ -4,6 +4,8 @@
              x:Class="PastryAdmin.Products_Manager_Page"
              Title="Products_Manager_Page">
     <Grid ColumnDefinitions="0.2*, 0.8*">
+        <Button Text="Back" Clicked="Go_To_Main_Page"/>
+
         <VerticalStackLayout Grid.Column="0">
             <Entry x:Name="product_name__entry" Placeholder="Name" MaxLength="30"/>
             <Entry x:Name="product_description__entry" Placeholder="Description" MaxLength="120"/>

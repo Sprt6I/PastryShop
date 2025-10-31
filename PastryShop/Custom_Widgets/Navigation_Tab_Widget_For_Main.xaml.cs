@@ -18,18 +18,21 @@ public partial class Navigation_Tab_Widget_For_Main : ContentView
         InitializeComponent();
     }
 
-    public async void Go_To_Main_(object sender, EventArgs e)
+    public void Go_To_Main_(object sender, EventArgs e)
     {
+        if (Application.Current == null) { return; }
         Application.Current.MainPage = new MainPage(user_id);
     }
 
-    public async void Go_To_Cart_(object sender, EventArgs e)
+    public void Go_To_Cart_(object sender, EventArgs e)
     {
+        if (Application.Current == null) { return; }
         Application.Current.MainPage = new Cart_Page(user_id);
     }
 
-    public async void Go_To_Orders_(object sender, EventArgs e)
+    public void Go_To_Orders_(object sender, EventArgs e)
     {
+        if (Application.Current == null) { return; }
         Application.Current.MainPage = new Orders_Page(user_id);
     }
 }

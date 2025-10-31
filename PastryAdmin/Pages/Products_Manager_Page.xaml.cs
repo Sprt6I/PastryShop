@@ -33,8 +33,8 @@ public partial class Products_Manager_Page : ContentPage
         //BindingContext = this;
         products__list_view.ItemsSource = products_collection;
 
-        Load_Product_Categories_();
-        Load_Products_();
+        _ = Load_Product_Categories_();
+        _ = Load_Products_();
     }
 
     public async void Add_Product_(object sender, EventArgs e)
@@ -132,12 +132,12 @@ public partial class Products_Manager_Page : ContentPage
             await DisplayAlert("Error", "Failed to update product.", "OK"); return;
         }
 
-        Load_Products_();
+        _ = Load_Products_();
     } 
 
     public async void Product_Selection_Changed_(object sender, SelectionChangedEventArgs e)
     {
-        Product selected_product = (Product)e.CurrentSelection.FirstOrDefault() ?? null;
+        Product? selected_product = (Product?)e.CurrentSelection.FirstOrDefault() ?? null;
         if (selected_product == null) { return; }
 
         current_product = selected_product;
@@ -170,5 +170,11 @@ public partial class Products_Manager_Page : ContentPage
         {
             entry.Text = e.OldTextValue;
         }
+    }
+
+    public async void Go_To_Main_Page(object sender, EventArgs e)
+    {
+        if (Application.Current == null) { await DisplayAlert("Error", "Failed to update product.", "OK"); return; }
+        Application.Current.MainPage = new MainPage();
     }
 }

@@ -75,7 +75,7 @@ public partial class Login_Page : ContentPage
 
     }
 
-    public async void Go_To_Register_(object sender, EventArgs e)
+    public void Go_To_Register_(object sender, EventArgs e)
     {
         if (Application.Current == null) { login_errors_label.Text = "Application error"; return; }
         Application.Current.MainPage = new Register_Page();

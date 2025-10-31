@@ -10,9 +10,9 @@ namespace PastryAdmin
 {
     public partial class MainPage : ContentPage
     {
-        public ISeries[] series { get; set; }
-        public Axis[] x_axes { get; set; }
-        public Axis[] y_axes { get; set; }
+        public ISeries[] series { get; set; } = Array.Empty<ISeries>();
+        public Axis[] x_axes { get; set; } = Array.Empty<Axis>();
+        public Axis[] y_axes { get; set; } = Array.Empty<Axis>();
 
         private static readonly HttpClient client;
 
@@ -29,7 +29,7 @@ namespace PastryAdmin
         public MainPage()
         {
             InitializeComponent();
-            Initialize_Chart_();
+            _ = Initialize_Chart_();
         }
 
         private async Task Initialize_Chart_()
@@ -40,7 +40,13 @@ namespace PastryAdmin
         {
             try
             {
-                List<User> users = await client.GetFromJsonAsync<List<User>>("Admin/GetAllUsers");
+                List<User>? users = await client.GetFromJsonAsync<List<User>>("Admin/GetAllUsers");
+                if (users == null)
+                {
+                    await DisplayAlert("Error", "Failed to load Users.", "OK");
+                    return new List<User>();
+                }
+
                 return users;
             }
             catch (Exception ex)
