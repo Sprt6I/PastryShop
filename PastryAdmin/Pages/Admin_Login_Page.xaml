@@ -4,12 +4,11 @@
              x:Class="PastryAdmin.Pages.Admin_Login_Page"
              Title="Admin_Login_Page">
     <StackLayout>
-        <Label Text="Admin Login"/>
-        <Entry x:Name="login__entry" Placeholder="login" MaxLength="20"/>
-        <Entry x:Name="password__entry" Placeholder="password" MaxLength="30"/>
-
-        <Label x:Name="error__label" TextColor="Red"/>
-
-        <Button Text="Login" Clicked="Login_"/>
+        <Label Text="Admin Login" Style="{DynamicResource Key=BannerLable}"/>
+        <Entry x:Name="login__entry" Placeholder="Enter login" MaxLength="20"/>
+        <Entry x:Name="password__entry" Placeholder="Enter password" MaxLength="30"/>
+        
+        <Button Text="Login" Clicked="Login_" Style="{DynamicResource Key=SpecialButton}"/>
+        <Label x:Name="error__label" Style="{DynamicResource Key=ErrorLable}"/>
     </StackLayout>
 </ContentPage>

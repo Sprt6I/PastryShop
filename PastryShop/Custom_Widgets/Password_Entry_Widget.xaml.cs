@@ -32,7 +32,7 @@ public partial class Password_Entry_Widget : ContentView
 	{
 		is_password = !is_password;
 		password_entry.IsPassword = is_password;
-		if (is_password) { show_password_button.Text = "😮"; }
+		if (is_password) { show_password_button.Text = "👁️"; }
 		else { show_password_button.Text = "😑"; }
     }
 }

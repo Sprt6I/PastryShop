@@ -5,8 +5,8 @@
              x:Class="PastryAdmin.MainPage">
 
     <VerticalStackLayout>
-        <Label Text="Admin"/>
-        <Button Text="Manage Products" Clicked="Go_To_Product_Manager_"/>
+        <Label Text="Admin" Style="{DynamicResource Key=BannerLable}"/>
+        <Button Text="Manage Products" Clicked="Go_To_Product_Manager_"  Style="{DynamicResource Key=SpecialButton}"/>
 
         <lvc:CartesianChart Series="{Binding series}" XAxes="{Binding x_axes}" YAxes="{Binding y_axes}" HeightRequest="300"/>
         <Button Text="Refresh" Clicked="Refresh_Chart_"/>

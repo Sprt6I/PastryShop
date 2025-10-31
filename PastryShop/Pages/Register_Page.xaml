@@ -6,19 +6,20 @@
              Title="Register_Page">
 
         <VerticalStackLayout>
-            <Label Text="Register"/>
+            <Label Text="Register" Style="{DynamicResource Key=BannerLable}"/>
+
 
             <Entry x:Name="register_gmail_entry" Placeholder="gmail" MaxLength="50"/>
             <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry" />
             <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry_repeat" />
 
-            <Button Text="Sent code" Clicked="Send_Register_Confirmation_Code_"/>
+            <Button Text="Send code" Clicked="Send_Register_Confirmation_Code_" Style="{DynamicResource Key=SpecialButton}"/>
             <Entry x:Name="register_code_entry" Placeholder="code" MaxLength="6" Keyboard="Numeric" TextChanged="Code_Entry_Text_Changed_"/>
             
-            <Label Text="" x:Name="register_errors_label"/>
+            <Button Clicked="Register_" Text="Register" Style="{DynamicResource Key=SpecialButton}"/>
             
+            <Label Text="" x:Name="register_errors_label"  Style="{DynamicResource Key=ErrorLable}"/>
             
-            <Button Clicked="Register_" Text="Register"/>
             <Button Clicked="Go_To_Login_" Text="I have an account"/>
         </VerticalStackLayout>
 

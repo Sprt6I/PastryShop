@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PastryAdmin"
     Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
     Title="PastryAdmin">
 
     <ShellContent
-        Title="Home"
         ContentTemplate="{DataTemplate local:Pages.Admin_Login_Page}"
         Route="AdminLoginPage" />
 

@@ -5,17 +5,16 @@
              x:Class="PastryShop.Login_Page"
              Title="Login_Page">
     <VerticalStackLayout>
-        <Label>Login</Label>
+        <Label Style="{DynamicResource Key=BannerLable}">LOGIN</Label>
 
         <Entry x:Name="login_gmail_entry" Placeholder="gmail" MaxLength="50"/>
         <Custom_Widgets:Password_Entry_Widget x:Name="login_password_entry"/>
         <!--<Entry x:Name="login_password_entry" Placeholder="password" IsPassword="True"/>-->
 
+        <Button Clicked="Login_" Text="Login" Style="{DynamicResource Key=SpecialButton}"/>
+        
+        <Label Text="" x:Name="login_errors_label" Style="{DynamicResource Key=ErrorLable}"/>
 
-
-        <Label Text="" x:Name="login_errors_label"/>
-
-        <Button Clicked="Login_" Text="Login"/>
         <Button Clicked="Forgot_Password_" Text="I don't remember password"/>
         <Button Clicked="Go_To_Register_" Text="I don't have an account"/>
     </VerticalStackLayout>
