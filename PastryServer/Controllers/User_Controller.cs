@@ -111,5 +111,12 @@ namespace PastryServer.Controllers
         {
             return await database.Get_User_Orders(user);
         }
+
+        [HttpPost("AddToCart")]
+        public async Task<IActionResult> Add_To_Cart([FromBody] Add_To_Cart_Request add_to_cart_request)
+        {
+            await database.Add_To_Cart_(add_to_cart_request.User_Id, add_to_cart_request.Product_Id, add_to_cart_request.Product_Quantity);
+            return Ok();
+        }
     }
 }
