@@ -100,7 +100,8 @@ namespace PastryAdmin
 
         private async void Go_To_Product_Manager_(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Products_Manager_Page());
+            if (Application.Current == null) { await DisplayAlert("Error", "Failed to update product.", "OK"); return; }
+            Application.Current.MainPage = new Products_Manager_Page();
         }
 
         private async void Refresh_Chart_(object sender, EventArgs e)

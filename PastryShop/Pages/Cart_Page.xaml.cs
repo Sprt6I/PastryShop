@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 
 namespace PastryShop.Pages;
 using PastryServer.Models;
+using System.Collections.Generic;
 
 public partial class Cart_Page : ContentPage
 {
@@ -15,9 +16,23 @@ public partial class Cart_Page : ContentPage
 	public async Task Load_User_Cart()
 	{
         HttpResponseMessage response = new();
+        User_Cart? user_cart = null;
         try
         {
             response = await client.PostAsJsonAsync($"Cart/GetCart", new { user_id = user_id });
+
+            if (!response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Error", "Failed to load cart.", "OK");
+                return;
+            }
+
+            user_cart = await response.Content.ReadFromJsonAsync<User_Cart>();
+            if (user_cart == null)
+            {
+                await DisplayAlert("Error", "Failed to parse cart data.", "OK");
+                return;
+            }
         }
         catch (Exception ex)
         {
@@ -25,21 +40,20 @@ public partial class Cart_Page : ContentPage
             return;
         }
 
-        if (!response.IsSuccessStatusCode)
+        List <Product>? products_list = null;
+        try
         {
-            await DisplayAlert("Error", "Failed to load cart.", "OK");
-            return;
+            products_list = await client.GetFromJsonAsync<List<Product>>("Products/GetAllProducts");
+            if (products_list == null) { await DisplayAlert("Error", "Failed to load products.", "OK"); return; }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"Failed to load products: {ex.Message}", "OK");
         }
 
-        User_Cart? user_cart = await response.Content.ReadFromJsonAsync<User_Cart>();
-        if (user_cart == null)
-        {
-            await DisplayAlert("Error", "Failed to parse cart data.", "OK");
-            return;
-        }
-
-        foreach (Bought_Product product in user_cart.Bought_Products) {
-            var product_label = new Label { Text = $"{product.Product_Id} - {product.Quantity}" };
+        foreach (Bought_Product bought_product in user_cart.Bought_Products) {
+            Product? product = products_list.Find(p => p.Id == bought_product.Product_Id);
+            var product_label = new Label { Text = $"{product.Name} - {product.Price}" };
             user_cart_layout.Children.Add(product_label);
         }
     }

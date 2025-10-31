@@ -38,8 +38,9 @@ public partial class Admin_Login_Page : ContentPage
 		{
             await DisplayAlert("Error", $"Failed to login, server error: {ex.Message}", "OK");
         }
-		
 
-        await Navigation.PushAsync(new MainPage());
+
+        if (Application.Current == null) { await DisplayAlert("Error", "Failed to update product.", "OK"); return; }
+        Application.Current.MainPage = new MainPage();
     }
 }

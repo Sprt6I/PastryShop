@@ -273,5 +273,14 @@ namespace PastryServer.Services
                 return false;
             }
         }
+
+        public async Task Add_To_Cart_(int user_id, int product_id, int product_quantity)
+        {
+            User_Cart cart = await Get_User_Cart_(user_id);
+
+            if (cart == null) { await database.InsertAsync(new User_Cart { User_Id = user_id, Bought_Products = new List<Bought_Product>() }); return; }
+
+            cart.Bought_Products.Add(new Bought_Product { Product_Id = product_id, Quantity = product_quantity });
+        }
     }
 }
