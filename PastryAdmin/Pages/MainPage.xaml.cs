@@ -14,7 +14,17 @@ namespace PastryAdmin
         public Axis[] x_axes { get; set; }
         public Axis[] y_axes { get; set; }
 
-        private readonly HttpClient client = new() { BaseAddress = new Uri("https://localhost:5201/") };
+        private static readonly HttpClient client;
+
+        static MainPage()
+        {
+            HttpClientHandler handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+        }
 
         public MainPage()
         {

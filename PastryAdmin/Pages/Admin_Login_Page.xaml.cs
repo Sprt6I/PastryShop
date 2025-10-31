@@ -4,7 +4,18 @@ namespace PastryAdmin.Pages;
 
 public partial class Admin_Login_Page : ContentPage
 {
-    private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://localhost:5201/") };
+    private static readonly HttpClient client;
+
+    static Admin_Login_Page()
+    {
+        HttpClientHandler handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+
+        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+    }
+
     public Admin_Login_Page()
 	{
 		InitializeComponent();

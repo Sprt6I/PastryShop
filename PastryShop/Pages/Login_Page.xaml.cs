@@ -5,13 +5,23 @@ using PastryServer.Helper_Files;
 
 public partial class Login_Page : ContentPage
 {
-    private static readonly HttpClient client = new HttpClient { BaseAddress = new Uri("https://localhost:5201/") };
-    
-    
+
+    private static readonly HttpClient client;
+
+    static Login_Page()
+    {
+        HttpClientHandler handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+
+        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+    }
+
     public Login_Page()
 	{
 		InitializeComponent();
-	}
+    }
 
     public async void Login_(object sender, EventArgs e)
     {

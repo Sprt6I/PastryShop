@@ -8,7 +8,17 @@ namespace PastryAdmin;
 
 public partial class Products_Manager_Page : ContentPage
 {
-	private readonly HttpClient client;
+    private static readonly HttpClient client;
+
+    static Products_Manager_Page()
+    {
+        HttpClientHandler handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
+
+        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+    }
 
     public ObservableCollection<Product> products_collection { get; set; } = new();
 
@@ -17,7 +27,6 @@ public partial class Products_Manager_Page : ContentPage
     public Products_Manager_Page()
 	{
 		InitializeComponent();
-        client = new HttpClient { BaseAddress = new Uri("https://localhost:5201/") };
 
         products__list_view.ItemsSource = products_collection;
 
