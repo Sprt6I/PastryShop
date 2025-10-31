@@ -38,8 +38,8 @@ public partial class Cart_Page : ContentPage
             return;
         }
 
-        foreach (Product product in user_cart.Products) {
-            var product_label = new Label { Text = $"{product.Name} - {product.Description} - In Stock: {product.In_Stock} - Price: {product.Price}$" };
+        foreach (Bought_Product product in user_cart.Bought_Products) {
+            var product_label = new Label { Text = $"{product.Product_Id} - {product.Quantity}" };
             user_cart_layout.Children.Add(product_label);
         }
     }

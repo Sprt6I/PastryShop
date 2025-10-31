@@ -1,6 +1,6 @@
 namespace PastryShop.Custom_Widgets;
 
-public partial class Product_Widget : ContentPage
+public partial class Product_Widget : ContentView
 {
 	public static readonly BindableProperty product_idProperty =
 		BindableProperty.Create(nameof(product_id), typeof(int), typeof(Product_Widget), 0);
