@@ -1,4 +1,4 @@
-﻿using PastryServer.Models;
+﻿using PastryServer.Requests;
 using System.Net.Http.Json;
 
 namespace PastryShop
@@ -51,6 +51,7 @@ namespace PastryShop
                                 product_description = product.Description,
                                 product_in_stock = product.In_Stock,
                                 product_price = (int)product.Price,
+                                client = client,
                             });
                         }
                     }

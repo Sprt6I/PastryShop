@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PastryServer.Models;
+using PastryServer.Requests;
 using PastryServer.Services;
 
 namespace PastryServer.Controllers

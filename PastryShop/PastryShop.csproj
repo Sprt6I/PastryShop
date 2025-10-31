@@ -71,6 +71,12 @@
 	  <Compile Include="..\PastryServer\Models\Models.cs" Link="Models\Models.cs" />
 	  <Compile Include="..\PastryServer\Models\Product.cs" Link="Models\Product.cs" />
 	  <Compile Include="..\PastryServer\Models\User_Cart.cs" Link="Models\User_Cart.cs" />
+	  <Compile Include="..\PastryServer\Requests\Add_To_Cart_Request.cs" Link="Requests\Add_To_Cart_Request.cs" />
+	  <Compile Include="..\PastryServer\Requests\Gmail_Request.cs" Link="Requests\Gmail_Request.cs" />
+	  <Compile Include="..\PastryServer\Requests\Login_Request.cs" Link="Requests\Login_Request.cs" />
+	  <Compile Include="..\PastryServer\Requests\Product_Group.cs" Link="Requests\Product_Group.cs" />
+	  <Compile Include="..\PastryServer\Requests\Register_Request.cs" Link="Requests\Register_Request.cs" />
+	  <Compile Include="..\PastryServer\Requests\User_Id__Request.cs" Link="Requests\User_Id__Request.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -108,6 +114,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Models\" />
+	  <Folder Include="Requests\" />
 	</ItemGroup>
 
 	<ItemGroup>

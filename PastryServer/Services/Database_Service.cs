@@ -1,4 +1,5 @@
 ﻿using PastryServer.Models;
+using PastryServer.Requests;
 using SQLite;
 
 namespace PastryServer.Services
@@ -120,13 +121,26 @@ namespace PastryServer.Services
 
         public async Task<User_Cart> Get_User_Cart_(int user_id)
         {
+            if (user_id < 0)
+            {
+                Console.WriteLine("Invalid user ID", nameof(user_id));
+                return null!;
+            }
             try
             {
                 User_Cart cart = await database.Table<User_Cart>().Where(c => c.User_Id == user_id).FirstOrDefaultAsync();
+
+                if (cart == null)
+                {
+                    await database.InsertAsync(new User_Cart { User_Id = user_id, Bought_Products = new List<Bought_Product>() });
+                    cart = await database.Table<User_Cart>().Where(c => c.User_Id == user_id).FirstOrDefaultAsync();
+                }
+
                 return cart;
             }
             catch (Exception ex)
             {
+                
                 Console.WriteLine("[DATABASE]: Error getting user cart - " + ex.Message);
                 return null!;
             }
@@ -134,6 +148,18 @@ namespace PastryServer.Services
 
         public async Task<List<User_Order>> Get_User_Orders(User user)
         {
+            if (user == null)
+            {
+                Console.WriteLine("User is null", nameof(user));
+                return null!;
+            }
+
+            if (user.Id < 0)
+            {
+                Console.WriteLine("Invalid user ID", nameof(user.Id));
+                return null!;
+            }
+
             try
             {
                 var orders = await database.Table<User_Order>().Where(order => order.User_Id == user.Id).ToListAsync();
