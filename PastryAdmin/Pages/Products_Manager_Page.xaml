@@ -3,58 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PastryAdmin.Products_Manager_Page"
              Title="Products_Manager_Page">
-    <Grid ColumnDefinitions="0.2*, 0.8*">
+    <VerticalStackLayout>
         <Button Text="Back" Clicked="Go_To_Main_Page"/>
+        
+        <Grid ColumnDefinitions="0.2*, 0.8*">
 
-        <VerticalStackLayout Grid.Column="0">
-            <Entry x:Name="product_name__entry" Placeholder="Name" MaxLength="30"/>
-            <Entry x:Name="product_description__entry" Placeholder="Description" MaxLength="120"/>
-            <Picker x:Name="product_category__picker"/>
+            <VerticalStackLayout Grid.Column="0">
+                <Entry x:Name="product_name__entry" Placeholder="Name" MaxLength="30"/>
+                <Entry x:Name="product_description__entry" Placeholder="Description" MaxLength="120"/>
+                <Picker x:Name="product_category__picker"/>
 
-            <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" MaxLength="5" Keyboard="Numeric" TextChanged="How_Many_In_Stock_Entry_Text_Changed_"/> <!-- 99999 -->
-            <Entry x:Name="product_price__entry" Placeholder="Price" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"/> <!--999.99-->
+                <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" MaxLength="5" Keyboard="Numeric" TextChanged="How_Many_In_Stock_Entry_Text_Changed_"/> <!-- 99999 -->
+                <Entry x:Name="product_price__entry" Placeholder="Price" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"/> <!--999.99-->
 
-            <Button Text="Add" Clicked="Add_Product_"/>
-        </VerticalStackLayout>
+                <Button Text="Add" Clicked="Add_Product_"/>
+            </VerticalStackLayout>
 
 
-        <Grid Grid.Column="1"
-              Padding="10"
-              RowDefinitions="Auto,*">
+            <Grid Grid.Column="1"
+                  Padding="10"
+                  RowDefinitions="Auto,*">
 
-            <Grid x:Name="headerRow"
-                  ColumnDefinitions="Auto,*,*,*,*,*,*"
-                  Padding="5"
-                  BackgroundColor="#2A2A2A">
-                <Label Text="ID" FontAttributes="Bold" Grid.Column="1" TextColor="White"/>
-                <Label Text="Name" FontAttributes="Bold" Grid.Column="2" TextColor="White"/>
-                <Label Text="Description" FontAttributes="Bold" Grid.Column="3" TextColor="White"/>
-                <Label Text="Category" FontAttributes="Bold" Grid.Column="4" TextColor="White"/>
-                <Label Text="Stock" FontAttributes="Bold" Grid.Column="5" TextColor="White"/>
-                <Label Text="Price" FontAttributes="Bold" Grid.Column="6" TextColor="White"/>
+                <Grid x:Name="headerRow"
+                      ColumnDefinitions="Auto,*,*,*,*,*,*"
+                      Padding="5"
+                      BackgroundColor="#2A2A2A">
+                    <Label Text="ID" FontAttributes="Bold" Grid.Column="1" TextColor="White"/>
+                    <Label Text="Name" FontAttributes="Bold" Grid.Column="2" TextColor="White"/>
+                    <Label Text="Description" FontAttributes="Bold" Grid.Column="3" TextColor="White"/>
+                    <Label Text="Category" FontAttributes="Bold" Grid.Column="4" TextColor="White"/>
+                    <Label Text="Stock" FontAttributes="Bold" Grid.Column="5" TextColor="White"/>
+                    <Label Text="Price" FontAttributes="Bold" Grid.Column="6" TextColor="White"/>
+                </Grid>
+
+                <CollectionView Grid.Row="1"
+                                x:Name="products__list_view"
+                                ItemsSource="{Binding products_collection}"
+                                SelectionMode="Single"
+                                SelectionChanged="Product_Selection_Changed_">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="Auto,*,*,*,*,*,*"
+                                  Padding="5">
+                            
+                            
+                                <Label Text="{Binding Id}" Grid.Column="1" />
+                                <Label Text="{Binding Name}" Grid.Column="2" />
+                                <Label Text="{Binding Description}" Grid.Column="3" />
+                                <Label Text="{Binding Category}" Grid.Column="4" />
+                                <Label Text="{Binding In_Stock}" Grid.Column="5" />
+                                <Label Text="{Binding Price}" Grid.Column="6" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </Grid>
-
-            <CollectionView Grid.Row="1"
-                            x:Name="products__list_view"
-                            ItemsSource="{Binding products_collection}"
-                            SelectionMode="Single"
-                            SelectionChanged="Product_Selection_Changed_">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid ColumnDefinitions="Auto,*,*,*,*,*,*"
-                              Padding="5">
-                            
-                            
-                            <Label Text="{Binding Id}" Grid.Column="1" />
-                            <Label Text="{Binding Name}" Grid.Column="2" />
-                            <Label Text="{Binding Description}" Grid.Column="3" />
-                            <Label Text="{Binding Category}" Grid.Column="4" />
-                            <Label Text="{Binding In_Stock}" Grid.Column="5" />
-                            <Label Text="{Binding Price}" Grid.Column="6" />
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
         </Grid>
-    </Grid>
+    </VerticalStackLayout>
 </ContentPage>
