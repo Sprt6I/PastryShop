@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Name="Root"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PastryShop.Custom_Widgets.Product_Widget"
+             Title="Product_Widget">
+    <VerticalStackLayout>
+        <HorizontalStackLayout>
+            <Image x:Name="product_image" WidthRequest="100" HeightRequest="100" />
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <Label x:Name="product_name_label" Text="{Binding Source={x:Reference Root}, Path=product_name, Mode=TwoWay}" FontAttributes="Bold" FontSize="Medium" />
+                    <Label x:Name="price_label" Text="Price: "/>
+                </HorizontalStackLayout>
+                    
+                <Label x:Name="product_description_label" Text="{Binding Source={x:Reference Root}, Path=product_description, Mode=TwoWay}" FontSize="Small"/>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <Entry x:Name="quantity_to_buy_entry" Placeholder="1" Keyboard="Numeric" TextChanged="Quantity_Entry_Value_Changed_"/>
+            <Label Text="/"/>
+            <Label x:Name="available_quantity_label" Text="{Binding Source={x:Reference Root}, Path=product_in_stock, Mode=TwoWay}"/>
+            <Button x:Name="buy_button" Text="Add to Cart" Clicked="Add_To_Cart_"/>
+        </HorizontalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

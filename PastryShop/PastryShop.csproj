@@ -70,6 +70,7 @@
 	  <Compile Include="..\PastryServer\Helper_Files\Checks.cs" Link="Helper_Files\Checks.cs" />
 	  <Compile Include="..\PastryServer\Models\Models.cs" Link="Models\Models.cs" />
 	  <Compile Include="..\PastryServer\Models\Product.cs" Link="Models\Product.cs" />
+	  <Compile Include="..\PastryServer\Models\User_Cart.cs" Link="Models\User_Cart.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,6 +87,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Custom_Widgets\Password_Entry_Widget.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Custom_Widgets\Product_Widget.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Cart_Page.xaml">

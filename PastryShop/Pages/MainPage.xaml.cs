@@ -32,8 +32,17 @@ namespace PastryShop
                     products_layout.Children.Add(category_label);
                     foreach (var product in group.Products)
                     {
-                        var product_label = new Label { Text = $"{product.Name} - {product.Description} - In Stock: {product.In_Stock} - Price: {product.Price}$" };
-                        products_layout.Children.Add(product_label);
+                        if (product.In_Stock > 0) // Remove == Break app, pls don't remove ( cuz in Product_Widget if there is less then it stock it will go into infinite look, changing text )
+                        {
+                            products_layout.Children.Add(new Custom_Widgets.Product_Widget
+                            {
+                                product_id = product.Id,
+                                product_name = product.Name,
+                                product_description = product.Description,
+                                product_in_stock = product.In_Stock,
+                                product_price = (int)product.Price,
+                            });
+                        }
                     }
                 }
             }
