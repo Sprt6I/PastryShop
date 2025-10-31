@@ -17,7 +17,7 @@
         </HorizontalStackLayout>
 
         <HorizontalStackLayout>
-            <Entry x:Name="quantity_to_buy_entry" Placeholder="1" Keyboard="Numeric" TextChanged="Quantity_Entry_Value_Changed_"/>
+            <Entry x:Name="quantity_to_buy_entry" Placeholder="1" Keyboard="Numeric" TextChanged="Quantity_Entry_Value_Changed_" MaxLength="5"/>
             <Label Text="/"/>
             <Label x:Name="available_quantity_label" Text="{Binding Source={x:Reference Root}, Path=product_in_stock, Mode=TwoWay}"/>
             <Button x:Name="buy_button" Text="Add to Cart" Clicked="Add_To_Cart_"/>

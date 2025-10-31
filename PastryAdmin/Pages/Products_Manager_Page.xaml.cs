@@ -52,9 +52,13 @@ public partial class Products_Manager_Page : ContentPage
         if (string.IsNullOrEmpty(how_many_in_stock)) { await DisplayAlert("Error", "Add how many in stock", "OK"); return; }
         int how_many_in_stock__int = int.Parse(how_many_in_stock);
 
+        string product_price = product_price__entry.Text?.Trim() ?? "";
+        if (string.IsNullOrEmpty(product_price)) { await DisplayAlert("Error", "Add product price", "OK"); return; }
+        float product_price__int = float.Parse(product_price);
+
         try
         {
-            await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int});
+            await client.PostAsJsonAsync("Products/AddProduct", new { Name=product_name, Description=product_description, Category=product_category, In_Stock=how_many_in_stock__int, Price= product_price__int});
         }
         catch (Exception ex)
         {
@@ -144,5 +148,27 @@ public partial class Products_Manager_Page : ContentPage
         Update_Product_(current_product);
 
         ((CollectionView)sender).SelectedItem = null;
+    }
+
+    public void How_Many_In_Stock_Entry_Text_Changed_(object sender, TextChangedEventArgs e)
+    {
+        var entry = (Entry)sender;
+        string new_text = e.NewTextValue;
+        if (string.IsNullOrEmpty(new_text)) { return; }
+        if (!System.Text.RegularExpressions.Regex.IsMatch(new_text, @"^[0-9]*$"))
+        {
+            entry.Text = e.OldTextValue;
+        }
+    }
+
+    public void Price_Entry_Text_Changed_(object sender, TextChangedEventArgs e)
+    {
+        var entry = (Entry)sender;
+        string new_text = e.NewTextValue;
+        if (string.IsNullOrEmpty(new_text)) { return; }
+        if (!System.Text.RegularExpressions.Regex.IsMatch(new_text, @"^([0-9]+\.?[0-9]{0,2}|[0-9]*\.[0-9]{1,2})$"))
+        {
+            entry.Text = e.OldTextValue;
+        }
     }
 }

@@ -9,11 +9,11 @@
            WidthRequest="300"
            VerticalOptions="Center"
            HorizontalOptions="Center">
-            <Entry Text="{Binding Name, Mode=TwoWay}" />
-            <Entry Text="{Binding Description, Mode=TwoWay}" />
+            <Entry Text="{Binding Name, Mode=TwoWay}" MaxLength="30"/>
+            <Entry Text="{Binding Description, Mode=TwoWay}" MaxLength="120"/>
             <Picker SelectedItem="{Binding Category}"/>
-            <Entry Text="{Binding In_Stock, Mode=TwoWay}" Keyboard="Numeric"/>
-            <Entry Text="{Binding Price, Mode=TwoWay}" Keyboard="Numeric"/>
+            <Entry Text="{Binding In_Stock, Mode=TwoWay}" MaxLength="5" Keyboard="Numeric" TextChanged="How_Many_In_Stock_Entry_Text_Changed_"/>
+            <Entry Text="{Binding Price, Mode=TwoWay}" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"/>
 
             <Button Text="Save" Clicked="Save_Clicked_"/>
         </VerticalStackLayout>

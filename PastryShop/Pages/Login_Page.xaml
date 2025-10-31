@@ -7,8 +7,8 @@
     <VerticalStackLayout>
         <Label>Login</Label>
 
-        <Entry x:Name="login_gmail_entry" Placeholder="gmail"/>
-        <Custom_Widgets:Password_Entry_Widget x:Name="login_password_entry" />
+        <Entry x:Name="login_gmail_entry" Placeholder="gmail" MaxLength="50"/>
+        <Custom_Widgets:Password_Entry_Widget x:Name="login_password_entry"/>
         <!--<Entry x:Name="login_password_entry" Placeholder="password" IsPassword="True"/>-->
 
 

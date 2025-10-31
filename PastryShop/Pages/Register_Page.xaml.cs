@@ -2,6 +2,7 @@ namespace PastryShop;
 using Microsoft.Maui.Controls;
 using System.Net.Http.Json;
 using PastryServer.Helper_Files;
+using MimeKit.Tnef;
 
 public partial class Register_Page : ContentPage
 {
@@ -82,5 +83,17 @@ public partial class Register_Page : ContentPage
     {
         if (Application.Current == null) { await DisplayAlert("Error", "Failed To Initialize App", "Ok"); return; }
         Application.Current.MainPage = new Login_Page();
+    }
+
+    private void Code_Entry_Text_Changed_(object sender, TextChangedEventArgs e)
+    {
+        if (!(sender is Entry)) { return; }
+        Entry entry = (Entry)sender;
+
+        var newText = e.NewTextValue ?? string.Empty;
+
+        var filtered = System.Text.RegularExpressions.Regex.Replace(newText, @"\D", "");
+
+        if (filtered != newText) { entry.Text = filtered; }
     }
 }

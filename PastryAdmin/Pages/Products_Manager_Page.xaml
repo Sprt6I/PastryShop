@@ -5,11 +5,12 @@
              Title="Products_Manager_Page">
     <Grid ColumnDefinitions="0.2*, 0.8*">
         <VerticalStackLayout Grid.Column="0">
-            <Entry x:Name="product_name__entry" Placeholder="Name"/>
-            <Entry x:Name="product_description__entry" Placeholder="Description" />
+            <Entry x:Name="product_name__entry" Placeholder="Name" MaxLength="30"/>
+            <Entry x:Name="product_description__entry" Placeholder="Description" MaxLength="120"/>
             <Picker x:Name="product_category__picker"/>
 
-            <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" />
+            <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" MaxLength="5" Keyboard="Numeric" TextChanged="How_Many_In_Stock_Entry_Text_Changed_"/> <!-- 99999 -->
+            <Entry x:Name="product_price__entry" Placeholder="Price" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"/> <!--999.99-->
 
             <Button Text="Add" Clicked="Add_Product_"/>
         </VerticalStackLayout>

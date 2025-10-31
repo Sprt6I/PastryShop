@@ -8,12 +8,12 @@
         <VerticalStackLayout>
             <Label Text="Register"/>
 
-            <Entry x:Name="register_gmail_entry" Placeholder="gmail"/>
+            <Entry x:Name="register_gmail_entry" Placeholder="gmail" MaxLength="50"/>
             <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry" />
             <Custom_Widgets:Password_Entry_Widget x:Name="register_password_entry_repeat" />
 
             <Button Text="Sent code" Clicked="Send_Register_Confirmation_Code_"/>
-            <Entry x:Name="register_code_entry" Placeholder="code"/>
+            <Entry x:Name="register_code_entry" Placeholder="code" MaxLength="6" Keyboard="Numeric" TextChanged="Code_Entry_Text_Changed_"/>
             
             <Label Text="" x:Name="register_errors_label"/>
             
