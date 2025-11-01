@@ -103,14 +103,19 @@ public partial class Product_Widget : ContentView
 
 	public async void Add_To_Cart_(object sender, EventArgs e)
 	{
+        await Application.Current.MainPage.DisplayAlert("Error", "1", "OK");
         if (Application.Current == null || Application.Current.MainPage == null) { return; }
+        await Application.Current.MainPage.DisplayAlert("Error", "2", "OK");
 
         string quantity_to_buy = quantity_to_buy_entry.Text?.Trim() ?? "";
 		if (string.IsNullOrWhiteSpace(quantity_to_buy)) { await Application.Current.MainPage.DisplayAlert("Error", "Enter quantity to buy", "OK"); return; }
+        await Application.Current.MainPage.DisplayAlert("Error", "3", "OK");
 
-		int quantity_to_buy__int = int.TryParse(quantity_to_buy, out int res) ? res : -1;
+        int quantity_to_buy__int = int.TryParse(quantity_to_buy, out int res) ? res : -1;
 		if (quantity_to_buy__int < 0) { await Application.Current.MainPage.DisplayAlert("Error", "Quantity to buy is invalid", "OK"); return; }
+        await Application.Current.MainPage.DisplayAlert("Error", "4", "OK");
 
-        await client.PostAsJsonAsync("User/AddToCart", new { User_id = user_id, Product_id = product_id, Product_Quantity = quantity_to_buy__int });
+        await client.PostAsJsonAsync("Auth/AddToCart", new { User_id = user_id, Product_id = product_id, Product_Quantity = quantity_to_buy__int });
+        await Application.Current.MainPage.DisplayAlert("Error", "5", "OK");
     }
 }
