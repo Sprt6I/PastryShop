@@ -4,8 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-     <Style TargetType="Label" x:Key="BannerLable">
+    <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource Black}"/>
+
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductNameLabel">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductDescLabel">
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductAmoutLabel">
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductPriceLabel">
+    </Style>
+
+    <Style TargetType="Label" x:Key="BannerLable">
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="40"/>
 
@@ -26,6 +45,11 @@
         <Setter Property="HeightRequest" Value="40"/>
         <Setter Property="WidthRequest" Value="300"/>
         <Setter Property="Margin" Value="10"/>
+    </Style>
+
+    <Style TargetType="Image" x:Key="ProductImage">
+        <Setter Property="WidthRequest" Value="200"/>
+        <Setter Property="HeightRequest" Value="200"/>
     </Style>
 
     <Style TargetType="Entry" x:Key="WidgetEntry">
@@ -67,6 +91,19 @@
     <Style TargetType="Page" ApplyToDerivedTypes="True">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
+    </Style>
+
+    <Style TargetType="VerticalStackLayout">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+
+    <Style TargetType="VerticalStackLayout"  x:Key="ProductVerticalStackLayout">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="Padding" Value="15"/>
+    </Style>
+
+    <Style TargetType="HorizontalStackLayout" x:Key="ProductHorizontalStackLayout">
+        <Setter Property="VerticalOptions" Value="Center"/>
     </Style>
 
 </ResourceDictionary>
