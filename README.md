@@ -1,17 +1,19 @@
 # PastryShop
 
 
-In CMD:
+# In CMD:
 
-setx Gmail__Login ""
+setx Gmail__Login "darek26655@gmail.com"
 
-setx Gmail__Password ""
+setx Gmail__Password "auwryxbqulskiwam"
 
 
 Configurate Server:
 open cmd -> run "ipconfig" -> look for IPv4 address -> ip_address
 
 got to C: and create "certs" folder
+
+# In Powershell ( as admin ):
 
 dotnet dev-certs https --clean
 dotnet dev-certs https --trust
@@ -20,6 +22,10 @@ New-SelfSignedCertificate -DnsName "<ip_address>" -CertStoreLocation "cert:\Loca
 
 $pwd = ConvertTo-SecureString -String "yourpassword" -Force -AsPlainText
 Export-PfxCertificate -Cert "cert:\LocalMachine\My\<certificat_name>" -FilePath "C:\certs\localcert.pfx" -Password $pwd
+
+# If you don't have python go: "https://www.python.org/downloads/release/python-3133/" and download "Windows installer (64-bit)"
+ 
+#Go to PastryShop folder and run "configurate_server.py"
 
 run Visual Studio as admin
 
