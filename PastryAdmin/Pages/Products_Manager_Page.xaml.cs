@@ -27,14 +27,15 @@ public partial class Products_Manager_Page : ContentPage
     public Products_Manager_Page()
 	{
 		InitializeComponent();
-
         products__list_view.ItemsSource = products_collection;
+    }
 
-        //BindingContext = this;
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
         products__list_view.ItemsSource = products_collection;
-
-        _ = Load_Product_Categories_();
-        _ = Load_Products_();
+        await Load_Product_Categories_();
+        await Load_Products_();
     }
 
     public async void Add_Product_(object sender, EventArgs e)

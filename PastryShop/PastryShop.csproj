@@ -89,6 +89,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Custom_Widgets\Cart_Product_Widget.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Custom_Widgets\Navigation_Tab_Widget_For_Main.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

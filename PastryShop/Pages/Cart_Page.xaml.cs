@@ -22,11 +22,18 @@ public partial class Cart_Page : ContentPage
 	{
 		InitializeComponent();
         this.user_id = user_id;
-        _ = Load_User_Cart();
-
     }
-	public async Task Load_User_Cart()
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await DisplayAlert("Success", "Page appeared!", "OK");
+        await Load_User_Cart();
+    }
+
+    public async Task Load_User_Cart()
 	{
+        await DisplayAlert("Success", "1", "OK");
         HttpResponseMessage? response = null;
         User_Cart? user_cart = null;
         try
@@ -44,6 +51,7 @@ public partial class Cart_Page : ContentPage
             await DisplayAlert("Error", "Failed to load cart.", "OK");
             return;
         }
+        await DisplayAlert("Success", "2", "OK");
 
         if (response == null)
         {
@@ -57,6 +65,7 @@ public partial class Cart_Page : ContentPage
             await DisplayAlert("Error", "Failed to parse cart data.", "OK");
             return;
         }
+        await DisplayAlert("Success", "3", "OK");
 
         List <Product>? products_list = null;
         try
@@ -69,11 +78,15 @@ public partial class Cart_Page : ContentPage
         }
         if (products_list == null) { await DisplayAlert("Error", "Failed to load products.", "OK"); return; }
 
+        await DisplayAlert("Success", "4", "OK");
+
         foreach (Bought_Product bought_product in user_cart.Bought_Products) {
+            await DisplayAlert("Success", $"Loading product... {bought_product.Product_Id}", "OK");
             Product? product = products_list.Find(p => p.Id == bought_product.Product_Id);
-            if (product == null) { continue; }
+            if (product == null) { await DisplayAlert("Success", "No Product", "OK");  continue; }
             var product_label = new Label { Text = $"{product.Name} - {product.Price}" };
             user_cart_layout.Children.Add(product_label);
+            await DisplayAlert("Success", "Loaded product successfully.", "OK");
         }
     }
 }

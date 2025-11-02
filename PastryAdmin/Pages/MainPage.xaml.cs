@@ -29,7 +29,12 @@ namespace PastryAdmin
         public MainPage()
         {
             InitializeComponent();
-            _ = Initialize_Chart_();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await Initialize_Chart_();
         }
 
         private async Task Initialize_Chart_()

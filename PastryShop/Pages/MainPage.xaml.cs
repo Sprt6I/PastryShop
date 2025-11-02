@@ -22,10 +22,15 @@ namespace PastryShop
         {
             InitializeComponent();
             this.user_id = user_id;
-            Load_Categories_();
         }
 
-        private async void Load_Categories_() // TODO: Group here and remove it from the server
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await Load_Categories_();
+        }
+
+        private async Task Load_Categories_() // TODO: Group here and remove it from the server
         {
             try
             {

@@ -119,7 +119,12 @@ namespace PastryServer.Controllers
             User_Cart? user_cart = await database.Get_User_Cart_(user_id__request.user_Id);
             if (user_cart == null) { Console.WriteLine("User cart not found"); return NotFound("User cart not found"); }
 
+            Console.WriteLine("[MAIN]: Returned cart");
 
+            foreach (Bought_Product bought_product in user_cart.Bought_Products)
+            {
+                Console.WriteLine($"Product Id: {bought_product.Product_Id}, Quantity: {bought_product.Quantity}");
+            }
             return Ok(user_cart);
         }
 
@@ -137,12 +142,13 @@ namespace PastryServer.Controllers
         [HttpPost("AddToCart")]
         public async Task<IActionResult> Add_To_Cart([FromBody] Add_To_Cart_Request add_to_cart_request)
         {
-            if (add_to_cart_request == null) { return BadRequest("Add to cart request is null"); }
-            if (add_to_cart_request.User_Id < 0) { return BadRequest("User id is invalid"); }
-            if (add_to_cart_request.Product_Id < 0) { return BadRequest("Product id is invalid"); }
-            if (add_to_cart_request.Product_Quantity <= 0) { return BadRequest("Product quantity is invalid"); }
+            if (add_to_cart_request == null) { Console.WriteLine("[MAIN]: Cart, no request"); return BadRequest("Add to cart request is null"); }
+            if (add_to_cart_request.User_Id < 0) { Console.WriteLine("[MAIN]: Cart, invalid user id"); return BadRequest("User id is invalid"); }
+            if (add_to_cart_request.Product_Id < 0) { Console.WriteLine("[MAIN]: Cart, invalid product id"); return BadRequest("Product id is invalid"); }
+            if (add_to_cart_request.Product_Quantity <= 0) { Console.WriteLine("[MAIN]: Cart, invalid product quantity"); return BadRequest("Product quantity is invalid"); }
 
             await database.Add_To_Cart_(add_to_cart_request.User_Id, add_to_cart_request.Product_Id, add_to_cart_request.Product_Quantity);
+            Console.WriteLine("[MAIN]: Added to cart");
             return Ok();
         }
     }

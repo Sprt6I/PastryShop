@@ -1,6 +1,8 @@
-﻿using PastryServer.Models;
+﻿using Microsoft.Extensions.Logging;
+using PastryServer.Models;
 using PastryServer.Requests;
 using SQLite;
+using System.Reflection;
 
 namespace PastryServer.Services
 {
@@ -123,7 +125,8 @@ namespace PastryServer.Services
         {
             if (user_id < 0)
             {
-                Console.WriteLine("Invalid user ID", nameof(user_id));
+                Logger.Log($"Invalid user ID", Logger.LogLevel.Error);
+                //Console.WriteLine($"[Database -> {MethodBase.GetCurrentMethod()?.Name}]: Invalid user ID", nameof(user_id));
                 return null!;
             }
             try
@@ -135,15 +138,38 @@ namespace PastryServer.Services
                     await database.InsertAsync(new User_Cart { User_Id = user_id, Bought_Products = new List<Bought_Product>() });
                     cart = await database.Table<User_Cart>().Where(c => c.User_Id == user_id).FirstOrDefaultAsync();
                 }
-
+                Logger.Log($"Returned Cart {cart.Bought_Products}", Logger.LogLevel.Info);
+                //Console.WriteLine($"[DATABASE]: Returned Cart {cart.Bought_Products_Json}");
                 return cart;
             }
             catch (Exception ex)
             {
-                
-                Console.WriteLine("[DATABASE]: Error getting user cart - " + ex.Message);
+
+                Logger.Log($"Error getting user cart - {ex.Message}", Logger.LogLevel.Error);
                 return null!;
             }
+        }
+
+        public async Task Add_To_Cart_(int user_id, int product_id, int product_quantity)
+        {
+            if (user_id < 0) { Console.WriteLine($"[DATABASE -> Add_To_Cart]: Invalid user ID"); return; }
+            if (product_id < 0) { Console.WriteLine("[DATABASE -> Add_To_Cart]: Invalid product ID"); return; }
+            if (product_quantity < 1) { Console.WriteLine("[DATABASE -> Add_To_Cart]: Invalid product quantity"); return; }
+
+            User_Cart cart = await Get_User_Cart_(user_id);
+
+            if (cart == null) { await database.InsertAsync(new User_Cart { User_Id = user_id, Bought_Products = new List<Bought_Product>() }); return; }
+
+            //cart.Bought_Products.Add(new Bought_Product { Product_Id = product_id, Quantity = product_quantity });
+            Bought_Product? bought_Product = cart.Bought_Products.FirstOrDefault(bp => bp.Product_Id == product_id);
+            if (bought_Product != null) { bought_Product.Quantity += product_quantity; }
+            else { cart.Bought_Products.Add(new Bought_Product { Product_Id = product_id, Quantity = product_quantity }); }
+
+            await database.UpdateAsync(cart);
+
+            cart = await Get_User_Cart_(user_id);
+
+            Console.WriteLine($"[DATABASE -> Add_To_Cart]: Added to cart {cart.Bought_Products_Json}");
         }
 
         public async Task<List<User_Order>> Get_User_Orders(User user)
@@ -300,13 +326,6 @@ namespace PastryServer.Services
             }
         }
 
-        public async Task Add_To_Cart_(int user_id, int product_id, int product_quantity)
-        {
-            User_Cart cart = await Get_User_Cart_(user_id);
-
-            if (cart == null) { await database.InsertAsync(new User_Cart { User_Id = user_id, Bought_Products = new List<Bought_Product>() }); return; }
-
-            cart.Bought_Products.Add(new Bought_Product { Product_Id = product_id, Quantity = product_quantity });
-        }
+        
     }
 }

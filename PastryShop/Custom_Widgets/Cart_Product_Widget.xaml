@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PastryShop.Custom_Widgets.Cart_Product_Widget">
+    <VerticalStackLayout>
+        <Label x:Name="product_name_label" Text="Product Name"/>
+        <Label x:Name="all_products_of_this_type_price" Text="Product Price"/>
+        <Entry x:Name="product_quantity" Text="1" Keyboard="Numeric"/>
+        <Button x:Name="remove_product_button" Text="Remove from Cart" Clicked="Remove_Product_"/>
+    </VerticalStackLayout>
+</ContentView>
