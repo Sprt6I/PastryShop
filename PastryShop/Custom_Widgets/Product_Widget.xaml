@@ -3,23 +3,43 @@
              x:Name="Root"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PastryShop.Custom_Widgets.Product_Widget">
-    <VerticalStackLayout Style="{DynamicResource ProductVerticalStackLayout}">
-        <Image x:Name="product_image" Style="{DynamicResource ProductImage}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <Image x:Name="product_image" Style="{DynamicResource ProductImage}" Grid.ColumnSpan="2"/>
+
+        <Label x:Name="product_name_label" Text="{Binding Source={x:Reference Root}, Path=product_name, Mode=TwoWay}" Style="{DynamicResource ProductNameLabel}" Grid.Column="0" Grid.Row="1"/>
+        <Label x:Name="price_label" Text="Price: " Style="{DynamicResource ProductPriceLabel}"  Grid.Column="1" Grid.Row="1"/>
+
+        <Label x:Name="product_description_label" Text="{Binding Source={x:Reference Root}, Path=product_description, Mode=TwoWay}" Style="{DynamicResource ProductDescLabel}" Grid.ColumnSpan="2" Grid.Row="2"/>
+
+        <Entry x:Name="quantity_to_buy_entry" Placeholder="1" Keyboard="Numeric" TextChanged="Quantity_Entry_Value_Changed_" MaxLength="5" Style="{StaticResource ProductWidgetEntry}" Grid.Column="0" Grid.Row="3"/>
+        <Label x:Name="available_quantity_label" Text="{Binding Source={x:Reference Root}, Path=product_in_stock, Mode=TwoWay}" Style="{StaticResource ProductAmoutLabel}" Grid.Column="1" Grid.Row="3"/>
+
+        <Button x:Name="buy_button" Text="Add to Cart" Clicked="Add_To_Cart_" Grid.ColumnSpan="2" Grid.Row="4"/>
+    </Grid>
+    
+    <!--<VerticalStackLayout Style="{DynamicResource ProductVerticalStackLayout}">
 
         <HorizontalStackLayout Style="{DynamicResource ProductHorizontalStackLayout}">
-            <Label x:Name="product_name_label" Text="{Binding Source={x:Reference Root}, Path=product_name, Mode=TwoWay}" Style="{DynamicResource ProductNameLabel}"/>
-            <Label x:Name="price_label" Text="Price: "/>
+
         </HorizontalStackLayout>
 
-        <Label x:Name="product_description_label" Text="{Binding Source={x:Reference Root}, Path=product_description, Mode=TwoWay}" Style="{DynamicResource ProductDescLabel}"/>
 
         <HorizontalStackLayout Style="{DynamicResource ProductHorizontalStackLayout}">
-            <Entry x:Name="quantity_to_buy_entry" Placeholder="1" Keyboard="Numeric" TextChanged="Quantity_Entry_Value_Changed_" MaxLength="5"/>
-            <Label Text="/"/>
-            <Label x:Name="available_quantity_label" Text="{Binding Source={x:Reference Root}, Path=product_in_stock, Mode=TwoWay}"/>
+
         </HorizontalStackLayout>
 
-        <Button x:Name="buy_button" Text="Add to Cart" Clicked="Add_To_Cart_"/>
-    </VerticalStackLayout>
+    </VerticalStackLayout>-->
 
 </ContentView>

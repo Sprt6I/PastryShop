@@ -38,7 +38,10 @@ namespace PastryShop
 
                 foreach (var group in products_groupedby_category)
                 {
-                    var category_label = new Label {Text = group.Category};
+                    var category_label = new Label {
+                        Text = group.Category,
+                        Style = (Style)Application.Current.Resources["CategoryLable"]
+                    };
                     products_layout.Children.Add(category_label);
                     foreach (var product in group.Products)
                     {

@@ -5,7 +5,7 @@
              x:Class="PastryShop.Register_Page"
              Title="Register_Page">
 
-        <VerticalStackLayout>
+    <VerticalStackLayout Style="{StaticResource Menu}">
             <Label Text="Register" Style="{DynamicResource Key=BannerLable}"/>
 
 

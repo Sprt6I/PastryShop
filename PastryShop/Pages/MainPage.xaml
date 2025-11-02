@@ -5,7 +5,7 @@
              x:Class="PastryShop.MainPage"
              x:Name="Root">
 
-    <VerticalStackLayout>
+    <VerticalStackLayout>    
         <Custom_Widgets:Navigation_Tab_Widget_For_Main user_id="{Binding Source={x:Reference Root}, Path=user_id}" />
 
         <VerticalStackLayout x:Name="products_layout">

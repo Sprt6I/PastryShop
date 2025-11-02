@@ -65,10 +65,10 @@
   </Style>
 
   <Style TargetType="VerticalStackLayout" x:Key="AdminProductManagerVertivalStackLayout">
-      <!--<Setter Property="Padding" Value="10"/>-->
+      <Setter Property="Padding" Value="10"/>
   </Style>
 
-    <Style TargetType="VerticalStackLayout">
+    <Style TargetType="VerticalStackLayout" x:Key="Menu">
         <Setter Property="HorizontalOptions" Value="Center"/>
     </Style>
 
