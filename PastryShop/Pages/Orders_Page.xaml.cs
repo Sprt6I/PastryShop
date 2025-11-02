@@ -1,4 +1,5 @@
 namespace PastryShop.Pages;
+using PastryServer.Helper_Files;
 
 public partial class Orders_Page : ContentPage
 {
@@ -6,12 +7,13 @@ public partial class Orders_Page : ContentPage
 
     static Orders_Page()
     {
+        string ip = Checks.Get_Ipv4_();
         HttpClientHandler handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
 
-        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
+        client = new HttpClient(handler) { BaseAddress = new Uri($"https://{ip}:5001/") };
     }
     public int user_id { get; set; }
     public Orders_Page(int user_id)

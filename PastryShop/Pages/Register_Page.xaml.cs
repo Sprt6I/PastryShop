@@ -2,7 +2,6 @@ namespace PastryShop;
 using Microsoft.Maui.Controls;
 using System.Net.Http.Json;
 using PastryServer.Helper_Files;
-using MimeKit.Tnef;
 
 public partial class Register_Page : ContentPage
 {
@@ -10,12 +9,13 @@ public partial class Register_Page : ContentPage
 
     static Register_Page()
     {
+        string ip = Checks.Get_Ipv4_();
         HttpClientHandler handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
 
-        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
+        client = new HttpClient(handler) { BaseAddress = new Uri($"https://{ip}:5001/") };
     }
 
     public Register_Page()

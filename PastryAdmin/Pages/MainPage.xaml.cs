@@ -3,7 +3,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using PastryServer.Models;
-using System.Runtime.InteropServices;
+using PastryServer.Helper_Files;
 using System.Net.Http.Json;
 
 namespace PastryAdmin
@@ -18,12 +18,13 @@ namespace PastryAdmin
 
         static MainPage()
         {
+            string ip = Checks.Get_Ipv4_();
             HttpClientHandler handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
 
-            client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
+            client = new HttpClient(handler) { BaseAddress = new Uri($"https://{ip}:5001/") };
         }
 
         public MainPage()

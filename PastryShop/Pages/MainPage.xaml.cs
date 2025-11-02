@@ -1,5 +1,6 @@
 ﻿using PastryServer.Requests;
 using System.Net.Http.Json;
+using PastryServer.Helper_Files;
 
 namespace PastryShop
 {
@@ -9,12 +10,13 @@ namespace PastryShop
 
         static MainPage()
         {
+            string ip = Checks.Get_Ipv4_();
             HttpClientHandler handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
 
-            client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
+            client = new HttpClient(handler) { BaseAddress = new Uri($"https://{ip}:5001/") };
         }
         public int user_id { get; set; }
 

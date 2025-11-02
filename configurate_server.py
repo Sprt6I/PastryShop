@@ -17,11 +17,11 @@ with open("PastryServer\\Properties\\launchSettings.json", "r", encoding="utf-8-
   data = json.load(f)
 print(data)
 
-data["iisSettings"]["iisExpress"]["applicationUrl"] = f"http//{socket.gethostbyname(socket.gethostname())}:5000"
+data["iisSettings"]["iisExpress"]["applicationUrl"] = f"http://{socket.gethostbyname(socket.gethostname())}:5000"
 temp = data["profiles"]["http"]["applicationUrl"]
 temp = temp.split(";")
-temp[0] = f"http//{socket.gethostbyname(socket.gethostname())}:5000"
-temp[1] = f"https//{socket.gethostbyname(socket.gethostname())}:5001"
+temp[0] = f"http://{socket.gethostbyname(socket.gethostname())}:5000"
+temp[1] = f"https://{socket.gethostbyname(socket.gethostname())}:5001"
 temp = ';'.join(temp)
 data["profiles"]["http"]["applicationUrl"] = temp
 

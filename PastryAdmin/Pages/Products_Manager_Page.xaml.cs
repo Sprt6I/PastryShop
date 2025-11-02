@@ -3,6 +3,8 @@ using PastryAdmin.Popups;
 using PastryServer.Models;
 using System.Collections.ObjectModel;
 using System.Net.Http.Json;
+using PastryServer.Helper_Files;
+
 
 namespace PastryAdmin;
 
@@ -12,12 +14,13 @@ public partial class Products_Manager_Page : ContentPage
 
     static Products_Manager_Page()
     {
+        string ip = Checks.Get_Ipv4_();
         HttpClientHandler handler = new HttpClientHandler
         {
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
 
-        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
+        client = new HttpClient(handler) { BaseAddress = new Uri($"https://{ip}:5001/") };
     }
 
     public ObservableCollection<Product> products_collection { get; set; } = new();
