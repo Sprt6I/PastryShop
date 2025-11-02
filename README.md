@@ -2,21 +2,16 @@
 got to C: and create "certs" folder
 
 # In CMD:
-
-setx Gmail__Login "darek26655@gmail.com"
-
-setx Gmail__Password "auwryxbqulskiwam"
+1. setx Gmail__Login "darek26655@gmail.com"
+2. setx Gmail__Password "auwryxbqulskiwam"
 
 # In Powershell ( as admin ):
-run "ipconfig" -> look for IPv4 address -> ip_address
-
-dotnet dev-certs https --clean
-dotnet dev-certs https --trust
-
-New-SelfSignedCertificate -DnsName "<ip_address>" -CertStoreLocation "cert:\LocalMachine\My" -> certificat_name (thumbprint)
-
-$pwd = ConvertTo-SecureString -String "yourpassword" -Force -AsPlainText
-Export-PfxCertificate -Cert "cert:\LocalMachine\My\<certificat_name>" -FilePath "C:\certs\localcert.pfx" -Password $pwd
+1. ipconfig look for IPv4 address -> ip_address
+2. dotnet dev-certs https --clean
+3. dotnet dev-certs https --trust
+4. New-SelfSignedCertificate -DnsName "<ip_address>" -CertStoreLocation "cert:\LocalMachine\My" -> certificat_name (thumbprint)
+5. $pwd = ConvertTo-SecureString -String "yourpassword" -Force -AsPlainText
+6. Export-PfxCertificate -Cert "cert:\LocalMachine\My\\<certificat_name>" -FilePath "C:\certs\localcert.pfx" -Password $pwd
 
 # If you don't have python go: "https://www.python.org/downloads/release/python-3133/" and download "Windows installer (64-bit)"
  
