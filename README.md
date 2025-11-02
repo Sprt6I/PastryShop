@@ -25,10 +25,10 @@ Export-PfxCertificate -Cert "cert:\LocalMachine\My\<certificat_name>" -FilePath 
 
 # If you don't have python go: "https://www.python.org/downloads/release/python-3133/" and download "Windows installer (64-bit)"
  
-#Go to PastryShop folder and run "configurate_server.py"
+# Go to PastryShop folder and run "configurate_server.py"
 
-run Visual Studio as admin
+# run Visual Studio as admin
 
 
-In Visual Studio:
+# In Visual Studio:
 click solution in "Solution Explorer" with right click -> "Configurate Startip Project" -> Choose "Multiple startup project" -> set them from top to bottom 1. Pastry Server 2. Pastry Admin 3. Pastry Shop -> Set all their action to "Start"
