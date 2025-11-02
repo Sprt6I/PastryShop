@@ -14,7 +14,7 @@
                 <Picker x:Name="product_category__picker"/>
 
                 <Entry x:Name="how_many_in_stock__entry" Placeholder="How many in stock" MaxLength="5" Keyboard="Numeric" TextChanged="How_Many_In_Stock_Entry_Text_Changed_" Style="{StaticResource AdminProductManagerEntry}"/> <!-- 99999 -->
-                <Entry x:Name="product_price__entry" Placeholder="Price" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"/> <!--999.99-->
+                <Entry x:Name="product_price__entry" Placeholder="Price" MaxLength="6" Keyboard="Numeric" TextChanged="Price_Entry_Text_Changed_"  Style="{StaticResource AdminProductManagerEntry}"/> <!--999.99-->
 
                 <Button Text="Add" Clicked="Add_Product_" Style="{StaticResource SpecialButton}"/>
             </VerticalStackLayout>

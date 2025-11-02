@@ -4,8 +4,59 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-     <Style TargetType="Label" x:Key="BannerLable">
+    <Style TargetType="Image" x:Key="ProductImage">
+        <Setter Property="WidthRequest" Value="500"/>
+        <Setter Property="HeightRequest" Value="400"/>
+
+        <Setter Property="Background" Value="{StaticResource Primary50}"/>
+    </Style>
+
+    <!--LABEL-->
+    
+    <Style TargetType="Label">
         <Setter Property="TextColor" Value="{StaticResource Black}"/>
+
+    </Style>
+
+    <Style TargetType="Label" x:Key="CategoryLable">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="Medium"/>
+
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductNameLabel">
+        <Setter Property="FontAttributes" Value="Bold"/>
+
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductPriceLabel">
+
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0, 5, 5, 5"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductDescLabel">
+
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+
+
+    </Style>
+
+    <Style TargetType="Label" x:Key="ProductAmoutLabel">
+        <Setter Property="Margin" Value="0, 5, 5, 5"/>
+
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="BannerLable">
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="40"/>
 
@@ -19,6 +70,8 @@
         <Setter Property="Padding" Value="10"/>
     </Style>
 
+    <!--ENTRY-->
+
     <Style TargetType="Entry">
         <Setter Property="Background" Value="{StaticResource Primary50}"/>
         <Setter Property="TextColor" Value="Black"/>
@@ -31,6 +84,13 @@
     <Style TargetType="Entry" x:Key="WidgetEntry">
         <Setter Property="WidthRequest" Value="240"/>
     </Style>
+
+    <Style TargetType="Entry" x:Key="ProductWidgetEntry">
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="HeightRequest" Value="0"/>
+    </Style>
+
+    <!--BUTTON-->
 
     <Style TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
@@ -59,6 +119,8 @@
         <Setter Property="WidthRequest" Value="40"/>
     </Style>
 
+    <!--MISC-->
+
     <Style TargetType="Frame">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
@@ -69,4 +131,13 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
     </Style>
 
+    <Style TargetType="VerticalStackLayout" x:Key="Menu">
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+
+    <Style TargetType="Grid">
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="WidthRequest" Value="500"/>
+    </Style>
+    
 </ResourceDictionary>

@@ -14,7 +14,7 @@ namespace PastryShop
                 ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
 
-            client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+            client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
         }
         public int user_id { get; set; }
 
@@ -43,7 +43,10 @@ namespace PastryShop
 
                 foreach (var group in products_groupedby_category)
                 {
-                    var category_label = new Label {Text = group.Category};
+                    var category_label = new Label {
+                        Text = group.Category,
+                        Style = (Style)Application.Current.Resources["CategoryLable"]
+                    };
                     products_layout.Children.Add(category_label);
                     foreach (var product in group.Products)
                     {

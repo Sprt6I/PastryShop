@@ -15,7 +15,7 @@ public partial class Cart_Page : ContentPage
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
 
-        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.0.31:5001/") };
+        client = new HttpClient(handler) { BaseAddress = new Uri("https://192.168.1.50:5001/") };
     }
     public int user_id { get; set; }
     public Cart_Page(int user_id)

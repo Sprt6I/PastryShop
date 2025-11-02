@@ -4,7 +4,7 @@
              xmlns:Custom_Widgets="clr-namespace:PastryShop.Custom_Widgets"
              x:Class="PastryShop.Login_Page"
              Title="Login_Page">
-    <VerticalStackLayout>
+    <VerticalStackLayout Style="{StaticResource Menu}">
         <Label Style="{DynamicResource Key=BannerLable}">LOGIN</Label>
 
         <Entry x:Name="login_gmail_entry" Placeholder="gmail" MaxLength="50"/>
