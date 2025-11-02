@@ -1,5 +1,5 @@
 # PastryShop
-
+got to C: and create "certs" folder
 
 # In CMD:
 
@@ -7,18 +7,13 @@ setx Gmail__Login "darek26655@gmail.com"
 
 setx Gmail__Password "auwryxbqulskiwam"
 
-
-Configurate Server:
-open cmd -> run "ipconfig" -> look for IPv4 address -> ip_address
-
-got to C: and create "certs" folder
-
 # In Powershell ( as admin ):
+run "ipconfig" -> look for IPv4 address -> ip_address
 
 dotnet dev-certs https --clean
 dotnet dev-certs https --trust
 
-New-SelfSignedCertificate -DnsName "<ip_address>" -CertStoreLocation "cert:\LocalMachine\My" -> certificat_name
+New-SelfSignedCertificate -DnsName "<ip_address>" -CertStoreLocation "cert:\LocalMachine\My" -> certificat_name (thumbprint)
 
 $pwd = ConvertTo-SecureString -String "yourpassword" -Force -AsPlainText
 Export-PfxCertificate -Cert "cert:\LocalMachine\My\<certificat_name>" -FilePath "C:\certs\localcert.pfx" -Password $pwd
